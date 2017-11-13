@@ -24,12 +24,21 @@ public class ConectaBanco {
         try {//tentativa inicial
             System.setProperty("jdbc.Drivers", driver);//seta a propriedade do driver de conexão
             conn = DriverManager.getConnection(caminho, usuario, senha);//realiza a conexão com o banco de dados
-            JOptionPane.showMessageDialog(null, "Conectado com Sucesso!");//imprimi uma caixa de mensagem
+            //JOptionPane.showMessageDialog(null, "Conectado com Sucesso!");//imprimi uma caixa de mensagem
         } catch (SQLException ex) {//excessão
-            JOptionPane.showMessageDialog(null, "Erro de Conexão!\n Erro"+ex.getMessage());//
+            JOptionPane.showMessageDialog(null, "Erro de Conexão!\n Erro"+ex.getMessage());
         }
         
     }
+    public void executaSQL(String sql){
+        try {
+            stm = conn.createStatement(res.TYPE_SCROLL_INSENSITIVE, res.CONCUR_READ_ONLY);
+            res = stm.executeQuery(sql);
+        } catch (SQLException ex) {
+            //JOptionPane.showMessageDialog(null, "Erro de ExecutaSQL!\n Erro"+ex.getMessage());
+        }
+    }
+        
     public void desconecta(){//metodo para fechar a conexao com o banco de dados
         try {
             conn.close();//fecha a conexão
