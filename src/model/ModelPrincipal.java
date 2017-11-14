@@ -7,12 +7,13 @@ package model;
 
 import view.TelaFuncionario;
 import view.TelaPrincipal;
+import view.TelaProduto;
 
 /**
  *
  * @author edila
  */
-public class UtilidadeDomestica {
+public class ModelPrincipal {
 
     /**
      * @param args the command line arguments
@@ -23,5 +24,7 @@ public class UtilidadeDomestica {
         frm.setVisible(true);
        
     }
+    
+   
     
 }
