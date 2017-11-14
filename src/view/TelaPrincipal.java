@@ -121,7 +121,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void txtProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProdutosActionPerformed
-        // TODO add your handling code here:
+            TelaProduto frm = new TelaProduto();
+            frm.setVisible(true);  
     }//GEN-LAST:event_txtProdutosActionPerformed
 
     private void txtSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtSairMouseClicked

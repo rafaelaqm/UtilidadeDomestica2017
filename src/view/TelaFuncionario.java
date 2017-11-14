@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package view;
 
 
@@ -412,7 +408,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
        
          try {
-            PreparedStatement pst = conecta.conn.prepareStatement("update funcionario set ativo=?, nome=?, endereço=?, telefone=?, celular=?, email=?, cargo=?, salario=?, senha=?, observações=? where codigo=?");//passagem do sql para inserção
+            PreparedStatement pst = conecta.conn.prepareStatement("update funcionario set ativo=?, nome=?, endereço=?, telefone=?, celular=?, email=?, cargo=?, salário=?, senha=?, observações=? where código=?");//passagem do sql para inserção
             pst.setString(1, (String) txtAtivo.getSelectedItem());//passagem dos parametros para o banco
             pst.setString(2,txtNome.getText());
             pst.setString(3,txtEndereco.getText());
@@ -420,7 +416,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
             pst.setString(5,txtCelular.getText());
             pst.setString(6,txtEmail.getText());
             pst.setString(7, (String) txtCargo.getSelectedItem());
-            pst.setFloat(8,Float.parseFloat(String) txtSalario.getText());
+            pst.setFloat(8, (txtSalario.getText()));
             pst.setString(9,txtSenha.getText());
             pst.setString(10,txtObs1.getText());
             pst.setInt(11,Integer.parseInt(txtCodigo.getText()));
@@ -475,7 +471,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-       
+        
         txtCodigo.setText("");
         txtAtivo.setSelectedItem("");
         txtNome.setText("");
@@ -505,7 +501,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
         btnIncluir.setEnabled(true);
         
         try {
-            PreparedStatement pst = conecta.conn.prepareStatement("insert into funcionario (ativo, nome, endereço, telefone, celular, email, cargo, salario, senha, observações)values(?,?,?,?,?,?,?,?,?,?)");
+            PreparedStatement pst = conecta.conn.prepareStatement("insert into funcionário (ativo, nome, endereço, telefone, celular, email, cargo, salário, senha, observações)values(?,?,?,?,?,?,?,?,?,?)");
             pst.setString(1, (String) txtAtivo.getSelectedItem());
             pst.setString(2,txtNome.getText());
             pst.setString(3,txtEndereco.getText());
@@ -513,7 +509,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
             pst.setString(5,txtCelular.getText());
             pst.setString(6,txtEmail.getText());
             pst.setString(7, (String) txtCargo.getSelectedItem());
-            pst.setFloat(8,Float.parseFloat(String) txtSalario.getText());
+            pst.setFloat(8, (txtSalario.getText()));
             pst.setString(9,txtSenha.getText());
             pst.setString(10,txtObs1.getText());
             pst.executeUpdate();

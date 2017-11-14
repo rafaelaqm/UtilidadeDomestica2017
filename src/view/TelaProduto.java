@@ -1,6 +1,7 @@
 
 package view;
 
+import dao.ConectaBanco;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -10,12 +11,15 @@ import javax.swing.JOptionPane;
  * @author edila
  */
 public class TelaProduto extends javax.swing.JFrame {
+    
+    ConectaBanco conecta = new ConectaBanco();//instancia da classe de conexão
 
     /**
      * Creates new form TelaProduto
      */
     public TelaProduto() {
         initComponents();
+        conecta.conexao();//chamada do metodo de conexão
     }
 
     /**
@@ -32,8 +36,8 @@ public class TelaProduto extends javax.swing.JFrame {
         txtCodigo = new javax.swing.JTextField();
         lblAtivo = new javax.swing.JLabel();
         txtAtivo = new javax.swing.JComboBox<>();
-        lblNome = new javax.swing.JLabel();
-        txtNome = new javax.swing.JTextField();
+        lblDescritivo = new javax.swing.JLabel();
+        txtDescritivo = new javax.swing.JTextField();
         lblValor = new javax.swing.JLabel();
         txtValor = new javax.swing.JTextField();
         pnlVenda = new javax.swing.JPanel();
@@ -77,13 +81,13 @@ public class TelaProduto extends javax.swing.JFrame {
             }
         });
 
-        lblNome.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblNome.setText("Nome");
+        lblDescritivo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblDescritivo.setText("Descritivo");
 
-        txtNome.setEnabled(false);
-        txtNome.addActionListener(new java.awt.event.ActionListener() {
+        txtDescritivo.setEnabled(false);
+        txtDescritivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNomeActionPerformed(evt);
+                txtDescritivoActionPerformed(evt);
             }
         });
 
@@ -105,7 +109,7 @@ public class TelaProduto extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlProdutoLayout.createSequentialGroup()
-                        .addComponent(lblNome)
+                        .addComponent(lblDescritivo)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(pnlProdutoLayout.createSequentialGroup()
                         .addGroup(pnlProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -117,7 +121,7 @@ public class TelaProduto extends javax.swing.JFrame {
                                 .addComponent(lblAtivo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtAtivo, 0, 179, Short.MAX_VALUE))
-                            .addComponent(txtNome, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtDescritivo, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(pnlProdutoLayout.createSequentialGroup()
                                 .addGroup(pnlProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblValor)
@@ -135,9 +139,9 @@ public class TelaProduto extends javax.swing.JFrame {
                     .addComponent(lblAtivo)
                     .addComponent(txtAtivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(11, 11, 11)
-                .addComponent(lblNome)
+                .addComponent(lblDescritivo)
                 .addGap(11, 11, 11)
-                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtDescritivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
                 .addComponent(lblValor)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -344,6 +348,7 @@ public class TelaProduto extends javax.swing.JFrame {
         pnlVenda.getAccessibleContext().setAccessibleName("");
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtQuantidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQuantidadeActionPerformed
@@ -361,18 +366,15 @@ public class TelaProduto extends javax.swing.JFrame {
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
 
         try {
-            PreparedStatement pst = conecta.conn.prepareStatement("update produto set ativo=?, nome=?, endereço=?, telefone=?, celular=?, email=?, cargo=?, salario=?, senha=?, observações=? where codigo=?");//passagem do sql para inserção
-            pst.setString(1, (String) txtQuantidade.getSelectedItem());//passagem dos parametros para o banco
-            pst.setString(2,txtNome.getText());
-            pst.setString(3,txtPreco.getText());
-            pst.setString(4,txtTelefone.getText());
-            pst.setString(5,txtCelular.getText());
-            pst.setString(6,txtEmail.getText());
-            pst.setString(7, (String) txtCargo.getSelectedItem());
-            pst.setFloat(8,Float.parseFloat(String) txtSalario.getText());
-            pst.setString(9,txtSenha.getText());
-            pst.setString(10,txtObs1.getText());
-            pst.setInt(11,Integer.parseInt(txtCodigo.getText()));
+            PreparedStatement pst = conecta.conn.prepareStatement("update produto set ativo=?, descritivo=?, valor_aquisição=?, preço_venda=?, unidade_medida=?, qtd_mínima=?, saldo_atual=? where código=?");//passagem do sql para inserção
+            pst.setString(1, (String) txtAtivo.getSelectedItem());//passagem dos parametros para o banco
+            pst.setString(2,txtDescritivo.getText());
+            /*pst.setDouble(3,Double.parseDouble(txtValor.getText()));
+            pst.setDouble(4,Double.parseDouble(txtPreco.getText()));*/
+            pst.setString(5, (String) txtUnidade.getSelectedItem());
+            /*pst.setFloat(6,Float.parseFloat((String) txtQuantidade.getSelectedItem()));
+            pst.setFloat(7,Float.parseFloat(txtSaldo.getText()));*/
+            pst.setInt(8,Integer.parseInt(txtCodigo.getText()));
             pst.executeUpdate();//executa a inserção
             JOptionPane.showMessageDialog(rootPane, "Alterado com Sucesso!");
         } catch (SQLException ex) {
@@ -383,27 +385,21 @@ public class TelaProduto extends javax.swing.JFrame {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
 
         txtCodigo.setText("");
-        txtQuantidade.setSelectedItem("");
-        txtNome.setText("");
+        txtAtivo.setSelectedItem("");
+        txtDescritivo.setText("");
+        txtValor.setText("");
         txtPreco.setText("");
-        txtTelefone.setText("");
-        txtCelular.setText("");
-        txtEmail.setText("");
-        txtCargo.setSelectedItem("");
-        txtSalario.setText("");
-        txtSenha.setText("");
-        txtObs1.setText("");
-
-        txtQuantidade.setEnabled(false);
-        txtNome.setEnabled(false);
+        txtUnidade.setSelectedItem("");
+        txtQuantidade.setSelectedItem("");
+        txtSaldo.setText("");
+       
+        txtAtivo.setEnabled(false);
+        txtDescritivo.setEnabled(false);
+        txtValor.setEnabled(false);
         txtPreco.setEnabled(false);
-        txtTelefone.setEnabled(false);
-        txtCelular.setEnabled(false);
-        txtEmail.setEnabled(false);
-        txtCargo.setEnabled(false);
-        txtSalario.setEnabled(false);
-        txtSenha.setEnabled(false);
-        txtObs1.setEnabled(false);
+        txtUnidade.setEnabled(false);
+        txtQuantidade.setEnabled(false);
+        txtSaldo.setEnabled(false);
 
         btnAlterar.setEnabled(false);
         btnConsultar.setEnabled(false);
@@ -411,14 +407,14 @@ public class TelaProduto extends javax.swing.JFrame {
         btnIncluir.setEnabled(true);
 
         try {
-            PreparedStatement pst = conecta.conn.prepareStatement("insert into produto (ativo, nome, valor, preço, unidade, quantidade, saldo)values(?,?,?,?,?,?,?)");
+            PreparedStatement pst = conecta.conn.prepareStatement("insert into produto (ativo, descritivo, valor_aquisição, preço_venda, unidade_medida, qtd_mínima, saldo_atual)values(?,?,?,?,?,?,?)");
             pst.setString(1, (String) txtAtivo.getSelectedItem());
-            pst.setString(2,txtNome.getText());
-            pst.setString(3,txtValor.getText());
-            pst.setString(4,txtPreco.getText());
+            pst.setString(2,txtDescritivo.getText());
+            pst.setDouble(3,Double.parseDouble(txtValor.getText()));
+            /*pst.setDouble(4,Double.parseDouble(txtPreco.getText()));*/
             pst.setString(5, (String) txtUnidade.getSelectedItem());
-            pst.setString(6, (String) txtQuantidade.getSelectedItem());
-            pst.setString(9,txtSaldo.getText());
+            /*pst.setFloat(6,Float.parseFloat((String) txtQuantidade.getSelectedItem()));
+            pst.setFloat(7,Float.parseFloat(txtSaldo.getText()));*/
             pst.executeUpdate();
             JOptionPane.showMessageDialog(rootPane, "Salvo com Sucesso!");
         } catch (SQLException ex) {
@@ -428,28 +424,22 @@ public class TelaProduto extends javax.swing.JFrame {
 
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
         txtCodigo.setText("");
-        txtQuantidade.setSelectedItem("");
-        txtNome.setText("");
+        txtAtivo.setSelectedItem("");
+        txtDescritivo.setText("");
+        txtValor.setText("");
         txtPreco.setText("");
-        txtTelefone.setText("");
-        txtCelular.setText("");
-        txtEmail.setText("");
-        txtCargo.setSelectedItem("");
-        txtSalario.setText("");
-        txtSenha.setText("");
-        txtObs1.setText("");
+        txtUnidade.setSelectedItem("");
+        txtQuantidade.setSelectedItem("");
+        txtSaldo.setText("");
 
-        txtQuantidade.setEnabled(true);
-        txtNome.setEnabled(true);
+        txtAtivo.setEnabled(true);
+        txtDescritivo.setEnabled(true);
+        txtValor.setEnabled(true);
         txtPreco.setEnabled(true);
-        txtTelefone.setEnabled(true);
-        txtCelular.setEnabled(true);
-        txtEmail.setEnabled(true);
-        txtCargo.setEnabled(true);
-        txtSalario.setEnabled(true);
-        txtSenha.setEnabled(true);
-        txtObs1.setEnabled(true);
-
+        txtUnidade.setEnabled(true);
+        txtQuantidade.setEnabled(true);
+        txtSaldo.setEnabled(true);
+        
         btnAlterar.setEnabled(true);
         btnConsultar.setEnabled(true);
         btnSalvar.setEnabled(true);
@@ -469,9 +459,9 @@ public class TelaProduto extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtAtivoActionPerformed
 
-    private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
+    private void txtDescritivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescritivoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNomeActionPerformed
+    }//GEN-LAST:event_txtDescritivoActionPerformed
 
     private void txtValorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtValorActionPerformed
         // TODO add your handling code here:
@@ -528,7 +518,7 @@ public class TelaProduto extends javax.swing.JFrame {
     private javax.swing.JButton btnSalvar;
     private javax.swing.JLabel lblAtivo;
     private javax.swing.JLabel lblCodigo;
-    private javax.swing.JLabel lblNome;
+    private javax.swing.JLabel lblDescritivo;
     private javax.swing.JLabel lblPreco;
     private javax.swing.JLabel lblQuantidade;
     private javax.swing.JLabel lblSaldo;
@@ -538,7 +528,7 @@ public class TelaProduto extends javax.swing.JFrame {
     private javax.swing.JPanel pnlVenda;
     private javax.swing.JComboBox<String> txtAtivo;
     private javax.swing.JTextField txtCodigo;
-    private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtDescritivo;
     private javax.swing.JTextField txtPreco;
     private javax.swing.JComboBox<String> txtQuantidade;
     private javax.swing.JTextField txtSaldo;
