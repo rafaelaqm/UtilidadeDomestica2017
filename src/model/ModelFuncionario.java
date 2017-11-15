@@ -143,13 +143,6 @@ public class ModelFuncionario {
     }
 
     /**
-     * @param txtSalario the txtSalario to set
-     */
-    public void setTxtSalario(float txtSalario) {
-        this.txtSalario = txtSalario;
-    }
-
-    /**
      * @return the txtSenha
      */
     public String getTxtSenha() {
@@ -176,6 +169,12 @@ public class ModelFuncionario {
     public void setTxtObs1(String txtObs1) {
         this.txtObs1 = txtObs1;
     }
-            
-            
+
+    /**
+     * @param txtSalario the txtSalario to set
+     */
+    public void setTxtSalario(float txtSalario) {
+        this.txtSalario = txtSalario;
+    }
+          
 }

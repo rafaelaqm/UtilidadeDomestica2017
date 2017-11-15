@@ -10,9 +10,11 @@ package model;
  * @author edila
  */
 public class ModelLogin {
+    private int Id_login;
     private String Nome;
     private String Senha;
-
+    private String Permissão;
+    private String Login;
     /**
      * @return the Nome
      */
@@ -39,6 +41,48 @@ public class ModelLogin {
      */
     public void setSenha(String Senha) {
         this.Senha = Senha;
+    }
+
+    /**
+     * @return the Id_login
+     */
+    public int getId_login() {
+        return Id_login;
+    }
+
+    /**
+     * @param Id_login the Id_login to set
+     */
+    public void setId_login(int Id_login) {
+        this.Id_login = Id_login;
+    }
+
+    /**
+     * @return the Permissão
+     */
+    public String getPermissão() {
+        return Permissão;
+    }
+
+    /**
+     * @param Permissão the Permissão to set
+     */
+    public void setPermissão(String Permissão) {
+        this.Permissão = Permissão;
+    }
+
+    /**
+     * @return the Login
+     */
+    public String getLogin() {
+        return Login;
+    }
+
+    /**
+     * @param Login the Login to set
+     */
+    public void setLogin(String Login) {
+        this.Login = Login;
     }
     
     

@@ -1,7 +1,7 @@
 
 package view;
 
-import dao.ConectaBanco;
+import control.ConectaBanco;
 
 
 public class TelaPrincipal extends javax.swing.JFrame {
@@ -19,12 +19,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jDesktopPane1 = new javax.swing.JDesktopPane();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        txtPrincipal = new javax.swing.JMenuBar();
+        txtArquivo = new javax.swing.JMenu();
+        txtVenda = new javax.swing.JMenuItem();
+        txtCadastro = new javax.swing.JMenu();
         txtFuncionario = new javax.swing.JMenuItem();
-        txtProdutos = new javax.swing.JMenuItem();
+        txtProduto = new javax.swing.JMenuItem();
         txtSair = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -41,27 +41,27 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGap(0, 370, Short.MAX_VALUE)
         );
 
-        jMenuBar1.setToolTipText("");
+        txtPrincipal.setToolTipText("");
 
-        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/page.png"))); // NOI18N
-        jMenu1.setText("Arquivos");
+        txtArquivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/page.png"))); // NOI18N
+        txtArquivo.setText("Arquivo");
 
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/sales.png"))); // NOI18N
-        jMenuItem1.setText("Vendas");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        txtVenda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/sales.png"))); // NOI18N
+        txtVenda.setText("Venda");
+        txtVenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                txtVendaActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        txtArquivo.add(txtVenda);
 
-        jMenuBar1.add(jMenu1);
+        txtPrincipal.add(txtArquivo);
 
-        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/group_add.png"))); // NOI18N
-        jMenu2.setText("Cadastro");
-        jMenu2.addActionListener(new java.awt.event.ActionListener() {
+        txtCadastro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/group_add.png"))); // NOI18N
+        txtCadastro.setText("Cadastro");
+        txtCadastro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu2ActionPerformed(evt);
+                txtCadastroActionPerformed(evt);
             }
         });
 
@@ -72,17 +72,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 txtFuncionarioActionPerformed(evt);
             }
         });
-        jMenu2.add(txtFuncionario);
+        txtCadastro.add(txtFuncionario);
 
-        txtProdutos.setText("Produto");
-        txtProdutos.addActionListener(new java.awt.event.ActionListener() {
+        txtProduto.setText("Produto");
+        txtProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtProdutosActionPerformed(evt);
+                txtProdutoActionPerformed(evt);
             }
         });
-        jMenu2.add(txtProdutos);
+        txtCadastro.add(txtProduto);
 
-        jMenuBar1.add(jMenu2);
+        txtPrincipal.add(txtCadastro);
 
         txtSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/house_go.png"))); // NOI18N
         txtSair.setText("Sair");
@@ -91,9 +91,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 txtSairMouseClicked(evt);
             }
         });
-        jMenuBar1.add(txtSair);
+        txtPrincipal.add(txtSair);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(txtPrincipal);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -116,23 +116,24 @@ public class TelaPrincipal extends javax.swing.JFrame {
        
     }//GEN-LAST:event_txtFuncionarioActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-            
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    private void txtVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtVendaActionPerformed
+            TelaVenda frm = new TelaVenda();
+            frm.setVisible(true);
+    }//GEN-LAST:event_txtVendaActionPerformed
 
-    private void txtProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProdutosActionPerformed
+    private void txtProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProdutoActionPerformed
             TelaProduto frm = new TelaProduto();
             frm.setVisible(true);  
-    }//GEN-LAST:event_txtProdutosActionPerformed
+    }//GEN-LAST:event_txtProdutoActionPerformed
 
     private void txtSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtSairMouseClicked
-        conecta.desconecta();
-        System.exit(0);
+            conecta.desconecta();
+            System.exit(0);
     }//GEN-LAST:event_txtSairMouseClicked
 
-    private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
+    private void txtCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCadastroActionPerformed
             
-    }//GEN-LAST:event_jMenu2ActionPerformed
+    }//GEN-LAST:event_txtCadastroActionPerformed
 
     /**
      * @param args the command line arguments
@@ -174,13 +175,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDesktopPane1;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenu txtArquivo;
+    private javax.swing.JMenu txtCadastro;
     private javax.swing.JMenuItem txtFuncionario;
-    private javax.swing.JMenuItem txtProdutos;
+    private javax.swing.JMenuBar txtPrincipal;
+    private javax.swing.JMenuItem txtProduto;
     private javax.swing.JMenu txtSair;
+    private javax.swing.JMenuItem txtVenda;
     // End of variables declaration//GEN-END:variables
 
    

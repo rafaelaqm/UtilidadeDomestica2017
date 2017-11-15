@@ -1,14 +1,15 @@
 
 package view;
 
-import dao.ConectaBanco;
+import control.ControlLogin;
+import control.ConectaBanco;
 import javax.swing.JOptionPane;
 
 
 public class TelaLogin extends javax.swing.JFrame {
     
     ConectaBanco conecta = new ConectaBanco();//instancia da classe de conexão
-
+    
     private Object JOptinPane;
     
     public TelaLogin() {
