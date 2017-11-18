@@ -1,20 +1,20 @@
 
 package view;
 
-import control.ControlLogin;
 import dao.ConectaBanco;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 
 public class TelaLogin extends javax.swing.JFrame {
     
-    ConectaBanco conecta = new ConectaBanco();//instancia da classe de conexão
-    
-    private Object JOptinPane;
+    ConectaBanco con = new ConectaBanco();//instancia da classe de conexão
     
     public TelaLogin() {
         initComponents();
-        conecta.conexao();//chamada do metodo de conexão
+        con.conexao();//chamada do metodo de conexão
     }
 
 
@@ -26,7 +26,7 @@ public class TelaLogin extends javax.swing.JFrame {
         lbUsuario = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
         lblSenha = new javax.swing.JLabel();
-        txtSenha = new javax.swing.JPasswordField();
+        ptxtSenha = new javax.swing.JPasswordField();
         btnEntrar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         lblTitulo = new javax.swing.JLabel();
@@ -47,12 +47,7 @@ public class TelaLogin extends javax.swing.JFrame {
         lblSenha.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblSenha.setText("Senha:");
 
-        txtSenha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtSenha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSenhaActionPerformed(evt);
-            }
-        });
+        ptxtSenha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         btnEntrar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnEntrar.setText("ENTRAR");
@@ -95,7 +90,7 @@ public class TelaLogin extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblSenha)
-                                    .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(ptxtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(btnEntrar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -115,7 +110,7 @@ public class TelaLogin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ptxtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEntrar)
@@ -140,19 +135,20 @@ public class TelaLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-        if (txtUsuario.getText().equals("Rafaela") && txtSenha.getText().equals("1234"))
-            {
-            JOptionPane.showMessageDialog(null, "Login efetuado com sucesso!!!");  
-            }
-        else 
-            {
-            JOptionPane.showMessageDialog(null, "Acesso negado");
-            }
+        try {
+            con.executaSQL("SELECT login,senha FROM usuario WHERE login='"+ this.txtUsuario.getText() + "'");
+            con.res.first();
+            if(con.res.getString("senha").equals(this.ptxtSenha.getText())){
+                TelaPrincipal pri = new TelaPrincipal();
+                pri.setVisible(true);
+                this.dispose();
+            } else JOptionPane.showMessageDialog(null, "A senha está incorreta. Verifique e tente novamente.");
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "O usuário não foi encontrado no banco. Verifique e tente novamente.");
+        }
+        
     }//GEN-LAST:event_btnEntrarActionPerformed
-
-    private void txtSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSenhaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSenhaActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         System.exit(0);
@@ -204,7 +200,7 @@ public class TelaLogin extends javax.swing.JFrame {
     private javax.swing.JLabel lblImagem;
     private javax.swing.JLabel lblSenha;
     private javax.swing.JLabel lblTitulo;
-    private javax.swing.JPasswordField txtSenha;
+    private javax.swing.JPasswordField ptxtSenha;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }
