@@ -14,10 +14,10 @@ import javax.swing.JOptionPane;
 public class ConectaBanco {
     public Statement stm;//preparar e realizar pesquisa no banco de dados
     public ResultSet res;//responsavel por armazenar o resultado de uma pesquisa passada pelo statement
-    private String driver = "com.mysql.jdbc.Driver";//responsável por identificar o serviço de banco de dados
-    private String caminho = "jdbc:mysql://localhost:3306/sistemadevenda";//responsavel por setar o local do banco de dados
-    private String usuario = "root";
-    private String senha = "1234";
+    private final String driver = "com.mysql.jdbc.Driver";//responsável por identificar o serviço de banco de dados
+    private final String caminho = "jdbc:mysql://localhost:3306/sistemadevenda";//responsavel por setar o local do banco de dados
+    private final String usuario = "root";
+    private final String senha = "1234";
     public Connection conn;//resposanvel por realizar a conexao com o banco de dados
     
     public void conexao(){//metodo responsavel por realizar a conexao com o banco
