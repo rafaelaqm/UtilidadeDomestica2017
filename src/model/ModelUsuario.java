@@ -9,7 +9,7 @@ package model;
  *
  * @author edila
  */
-public class ModelFuncionario {
+public class ModelUsuario {
     
             private int txtCodigo;        
             private String txtAtivo;

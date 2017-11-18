@@ -1,7 +1,7 @@
 
 package model;
 
-import view.TelaFuncionario;
+import view.TelaUsuario;
 import view.TelaPrincipal;
 import view.TelaProduto;
 import view.TelaLogin;

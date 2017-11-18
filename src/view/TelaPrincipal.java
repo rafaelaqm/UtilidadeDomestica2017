@@ -1,19 +1,12 @@
 
 package view;
 
-import dao.ConectaBanco;
-
 
 public class TelaPrincipal extends javax.swing.JFrame {
-    
-    ConectaBanco conecta = new ConectaBanco();//variavel global 
-    
     public TelaPrincipal() {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
-        conecta.conexao();
     }
-
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -112,7 +105,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFuncionarioActionPerformed
-            TelaFuncionario frm = new TelaFuncionario();
+            TelaUsuario frm = new TelaUsuario();
             frm.setVisible(true);  
        
     }//GEN-LAST:event_txtFuncionarioActionPerformed
@@ -128,7 +121,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_txtProdutoActionPerformed
 
     private void txtSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtSairMouseClicked
-            conecta.desconecta();
             System.exit(0);
     }//GEN-LAST:event_txtSairMouseClicked
 
