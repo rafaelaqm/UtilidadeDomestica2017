@@ -12,26 +12,26 @@ public class TelaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jDesktopPane1 = new javax.swing.JDesktopPane();
+        PainelPrincipal = new javax.swing.JDesktopPane();
         txtPrincipal = new javax.swing.JMenuBar();
         txtArquivo = new javax.swing.JMenu();
         txtVenda = new javax.swing.JMenuItem();
         txtCadastro = new javax.swing.JMenu();
-        txtFuncionario = new javax.swing.JMenuItem();
+        txtUsuario = new javax.swing.JMenuItem();
         txtProduto = new javax.swing.JMenuItem();
         txtSair = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de Vendas");
 
-        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
-        jDesktopPane1.setLayout(jDesktopPane1Layout);
-        jDesktopPane1Layout.setHorizontalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout PainelPrincipalLayout = new javax.swing.GroupLayout(PainelPrincipal);
+        PainelPrincipal.setLayout(PainelPrincipalLayout);
+        PainelPrincipalLayout.setHorizontalGroup(
+            PainelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 533, Short.MAX_VALUE)
         );
-        jDesktopPane1Layout.setVerticalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        PainelPrincipalLayout.setVerticalGroup(
+            PainelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 370, Short.MAX_VALUE)
         );
 
@@ -59,14 +59,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        txtFuncionario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/group.png"))); // NOI18N
-        txtFuncionario.setText("Funcionario");
-        txtFuncionario.addActionListener(new java.awt.event.ActionListener() {
+        txtUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/group.png"))); // NOI18N
+        txtUsuario.setText("Usuário");
+        txtUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFuncionarioActionPerformed(evt);
+                txtUsuarioActionPerformed(evt);
             }
         });
-        txtCadastro.add(txtFuncionario);
+        txtCadastro.add(txtUsuario);
 
         txtProduto.setText("Produto");
         txtProduto.addActionListener(new java.awt.event.ActionListener() {
@@ -93,22 +93,25 @@ public class TelaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1)
+            .addComponent(PainelPrincipal)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1)
+            .addComponent(PainelPrincipal)
         );
+
+        PainelPrincipal.getAccessibleContext().setAccessibleName("AreaTrabalho");
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFuncionarioActionPerformed
-            TelaUsuario frm = new TelaUsuario();
-            frm.setVisible(true);  
+    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
+            TelaUsuarioInterna frm = new TelaUsuarioInterna();
+            PainelPrincipal.add(frm);
+            frm.setVisible(true);
        
-    }//GEN-LAST:event_txtFuncionarioActionPerformed
+    }//GEN-LAST:event_txtUsuarioActionPerformed
 
     private void txtVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtVendaActionPerformed
             TelaVenda frm = new TelaVenda();
@@ -167,13 +170,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JDesktopPane jDesktopPane1;
+    private javax.swing.JDesktopPane PainelPrincipal;
     private javax.swing.JMenu txtArquivo;
     private javax.swing.JMenu txtCadastro;
-    private javax.swing.JMenuItem txtFuncionario;
     private javax.swing.JMenuBar txtPrincipal;
     private javax.swing.JMenuItem txtProduto;
     private javax.swing.JMenu txtSair;
+    private javax.swing.JMenuItem txtUsuario;
     private javax.swing.JMenuItem txtVenda;
     // End of variables declaration//GEN-END:variables
 

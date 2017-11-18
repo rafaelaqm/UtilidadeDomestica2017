@@ -11,170 +11,104 @@ package model;
  */
 public class ModelUsuario {
     
-            private int txtCodigo;        
-            private String txtAtivo;
-            private String txtNome;
-            private String txtEndereco;
-            private String txtTelefone;
-            private String txtCelular;
-            private String txtEmail;
-            private String txtCargo;
-            private float txtSalario;
-            private String txtSenha;
-            private String txtObs1;
+    private String login;        
+    private String senha;
+    private String ativo;
+    private String cargo;
+    private String nome;
+    private String endereco_completo;
+    private String telefone;
+    private String celular;
+    private String email;
+    private Double salario;
+    private String obs;
 
-    /**
-     * @return the txtCodigo
-     */
-    public int getTxtCodigo() {
-        return txtCodigo;
+    public String getLogin() {
+        return login;
     }
 
-    /**
-     * @param txtCodigo the txtCodigo to set
-     */
-    public void setTxtCodigo(int txtCodigo) {
-        this.txtCodigo = txtCodigo;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
-    /**
-     * @return the txtAtivo
-     */
-    public String getTxtAtivo() {
-        return txtAtivo;
+    public String getSenha() {
+        return senha;
     }
 
-    /**
-     * @param txtAtivo the txtAtivo to set
-     */
-    public void setTxtAtivo(String txtAtivo) {
-        this.txtAtivo = txtAtivo;
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
-    /**
-     * @return the txtNome
-     */
-    public String getTxtNome() {
-        return txtNome;
+    public String getAtivo() {
+        return ativo;
     }
 
-    /**
-     * @param txtNome the txtNome to set
-     */
-    public void setTxtNome(String txtNome) {
-        this.txtNome = txtNome;
+    public void setAtivo(String ativo) {
+        this.ativo = ativo;
     }
 
-    /**
-     * @return the txtEndereco
-     */
-    public String getTxtEndereco() {
-        return txtEndereco;
+    public String getCargo() {
+        return cargo;
     }
 
-    /**
-     * @param txtEndereco the txtEndereco to set
-     */
-    public void setTxtEndereco(String txtEndereco) {
-        this.txtEndereco = txtEndereco;
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
     }
 
-    /**
-     * @return the txtTelefone
-     */
-    public String getTxtTelefone() {
-        return txtTelefone;
+    public String getNome() {
+        return nome;
     }
 
-    /**
-     * @param txtTelefone the txtTelefone to set
-     */
-    public void setTxtTelefone(String txtTelefone) {
-        this.txtTelefone = txtTelefone;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    /**
-     * @return the txtCelular
-     */
-    public String getTxtCelular() {
-        return txtCelular;
+    public String getEndereco_completo() {
+        return endereco_completo;
     }
 
-    /**
-     * @param txtCelular the txtCelular to set
-     */
-    public void setTxtCelular(String txtCelular) {
-        this.txtCelular = txtCelular;
+    public void setEndereco_completo(String endereco_completo) {
+        this.endereco_completo = endereco_completo;
     }
 
-    /**
-     * @return the txtEmail
-     */
-    public String getTxtEmail() {
-        return txtEmail;
+    public String getTelefone() {
+        return telefone;
     }
 
-    /**
-     * @param txtEmail the txtEmail to set
-     */
-    public void setTxtEmail(String txtEmail) {
-        this.txtEmail = txtEmail;
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
-    /**
-     * @return the txtCargo
-     */
-    public String getTxtCargo() {
-        return txtCargo;
+    public String getCelular() {
+        return celular;
     }
 
-    /**
-     * @param txtCargo the txtCargo to set
-     */
-    public void setTxtCargo(String txtCargo) {
-        this.txtCargo = txtCargo;
+    public void setCelular(String celular) {
+        this.celular = celular;
     }
 
-    /**
-     * @return the txtSalario
-     */
-    public float getTxtSalario() {
-        return txtSalario;
+    public String getEmail() {
+        return email;
     }
 
-    /**
-     * @return the txtSenha
-     */
-    public String getTxtSenha() {
-        return txtSenha;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    /**
-     * @param txtSenha the txtSenha to set
-     */
-    public void setTxtSenha(String txtSenha) {
-        this.txtSenha = txtSenha;
+    public Double getSalario() {
+        return salario;
     }
 
-    /**
-     * @return the txtObs1
-     */
-    public String getTxtObs1() {
-        return txtObs1;
+    public void setSalario(Double salario) {
+        this.salario = salario;
     }
 
-    /**
-     * @param txtObs1 the txtObs1 to set
-     */
-    public void setTxtObs1(String txtObs1) {
-        this.txtObs1 = txtObs1;
+    public String getObs() {
+        return obs;
     }
 
-    /**
-     * @param txtSalario the txtSalario to set
-     */
-    public void setTxtSalario(float txtSalario) {
-        this.txtSalario = txtSalario;
+    public void setObs(String obs) {
+        this.obs = obs;
     }
           
 }

@@ -1,6 +1,9 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package view;
-
 
 import dao.ConectaBanco;
 import java.sql.PreparedStatement;
@@ -9,13 +12,16 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author rafa, wesley
+ * @author Wesley
  */
-public class TelaUsuario extends javax.swing.JFrame {
-   ConectaBanco conecta = new ConectaBanco();//instancia da classe de conexão
-   
-    public TelaUsuario() {
-       initComponents();
+public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
+    ConectaBanco conecta = new ConectaBanco();
+    /**
+     * Creates new form TelaUsuarioInterna
+     */
+    public TelaUsuarioInterna() {
+        initComponents();
+        conecta.conexao();
     }
 
     /**
@@ -27,13 +33,6 @@ public class TelaUsuario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnlPessoais = new javax.swing.JPanel();
-        lblAtivo = new javax.swing.JLabel();
-        txtAtivo = new javax.swing.JComboBox<>();
-        lblNome = new javax.swing.JLabel();
-        txtNome = new javax.swing.JTextField();
-        lblEndereco = new javax.swing.JLabel();
-        txtEndereco = new javax.swing.JTextField();
         btnAlterar = new javax.swing.JButton();
         btnIncluir = new javax.swing.JButton();
         pnlProfissionais = new javax.swing.JPanel();
@@ -48,8 +47,16 @@ public class TelaUsuario extends javax.swing.JFrame {
         ptxtSenha = new javax.swing.JPasswordField();
         lblLogin = new javax.swing.JLabel();
         txtSalario = new javax.swing.JTextField();
+        btnSalvar = new javax.swing.JButton();
         btnConsultar = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
+        pnlPessoais = new javax.swing.JPanel();
+        lblAtivo = new javax.swing.JLabel();
+        txtAtivo = new javax.swing.JComboBox<>();
+        lblNome = new javax.swing.JLabel();
+        txtNome = new javax.swing.JTextField();
+        lblEndereco = new javax.swing.JLabel();
+        txtEndereco = new javax.swing.JTextField();
         pnlContatos = new javax.swing.JPanel();
         lblTelefone = new javax.swing.JLabel();
         txtTelefone = new javax.swing.JFormattedTextField();
@@ -57,70 +64,8 @@ public class TelaUsuario extends javax.swing.JFrame {
         txtCelular = new javax.swing.JFormattedTextField();
         lblEmail = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
-        btnSalvar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro Funcionário");
-
-        pnlPessoais.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dados Pessoais", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
-
-        lblAtivo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblAtivo.setText("Ativo");
-
-        txtAtivo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Sim", "Não" }));
-        txtAtivo.setEnabled(false);
-
-        lblNome.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblNome.setText("Nome");
-
-        txtNome.setEnabled(false);
-
-        lblEndereco.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblEndereco.setText("Endereço Completo");
-
-        txtEndereco.setEnabled(false);
-
-        javax.swing.GroupLayout pnlPessoaisLayout = new javax.swing.GroupLayout(pnlPessoais);
-        pnlPessoais.setLayout(pnlPessoaisLayout);
-        pnlPessoaisLayout.setHorizontalGroup(
-            pnlPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlPessoaisLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlPessoaisLayout.createSequentialGroup()
-                        .addComponent(lblNome)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(pnlPessoaisLayout.createSequentialGroup()
-                        .addGroup(pnlPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtEndereco, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtNome, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(pnlPessoaisLayout.createSequentialGroup()
-                                .addComponent(lblEndereco)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(pnlPessoaisLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(lblAtivo)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtAtivo, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap())))
-        );
-        pnlPessoaisLayout.setVerticalGroup(
-            pnlPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlPessoaisLayout.createSequentialGroup()
-                .addGap(4, 4, 4)
-                .addGroup(pnlPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblAtivo)
-                    .addComponent(txtAtivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
-                .addComponent(lblNome)
-                .addGap(11, 11, 11)
-                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblEndereco)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        setTitle("Cadastro de Usuários");
 
         btnAlterar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/application_edit.png"))); // NOI18N
@@ -227,6 +172,16 @@ public class TelaUsuario extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        btnSalvar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/accept.png"))); // NOI18N
+        btnSalvar.setText("SALVAR");
+        btnSalvar.setEnabled(false);
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
+
         btnConsultar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnConsultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/application_form_magnify.png"))); // NOI18N
         btnConsultar.setText("CONSULTAR");
@@ -242,6 +197,66 @@ public class TelaUsuario extends javax.swing.JFrame {
                 btnSairActionPerformed(evt);
             }
         });
+
+        pnlPessoais.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dados Pessoais", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+
+        lblAtivo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblAtivo.setText("Ativo");
+
+        txtAtivo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Sim", "Não" }));
+        txtAtivo.setEnabled(false);
+
+        lblNome.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblNome.setText("Nome");
+
+        txtNome.setEnabled(false);
+
+        lblEndereco.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblEndereco.setText("Endereço Completo");
+
+        txtEndereco.setEnabled(false);
+
+        javax.swing.GroupLayout pnlPessoaisLayout = new javax.swing.GroupLayout(pnlPessoais);
+        pnlPessoais.setLayout(pnlPessoaisLayout);
+        pnlPessoaisLayout.setHorizontalGroup(
+            pnlPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlPessoaisLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlPessoaisLayout.createSequentialGroup()
+                        .addComponent(lblNome)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(pnlPessoaisLayout.createSequentialGroup()
+                        .addGroup(pnlPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtEndereco, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtNome, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(pnlPessoaisLayout.createSequentialGroup()
+                                .addComponent(lblEndereco)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(pnlPessoaisLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(lblAtivo)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtAtivo, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())))
+        );
+        pnlPessoaisLayout.setVerticalGroup(
+            pnlPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlPessoaisLayout.createSequentialGroup()
+                .addGap(4, 4, 4)
+                .addGroup(pnlPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblAtivo)
+                    .addComponent(txtAtivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
+                .addComponent(lblNome)
+                .addGap(11, 11, 11)
+                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblEndereco)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         pnlContatos.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dados de Contatos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12)))); // NOI18N
 
@@ -307,16 +322,6 @@ public class TelaUsuario extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btnSalvar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/accept.png"))); // NOI18N
-        btnSalvar.setText("SALVAR");
-        btnSalvar.setEnabled(false);
-        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalvarActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -356,17 +361,16 @@ public class TelaUsuario extends javax.swing.JFrame {
                     .addComponent(btnIncluir)
                     .addComponent(btnConsultar)
                     .addComponent(btnAlterar))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(874, 540));
-        setLocationRelativeTo(null);
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-       
-         try {
-            PreparedStatement pst = conecta.conn.prepareStatement("update funcionario set ativo=?, nome=?, endereço=?, telefone=?, celular=?, email=?, cargo=?, salário=?, login=?, senha=?, confirma_senha, observações=? where código=?");//passagem do sql para inserção
+
+        try {
+            PreparedStatement pst = conecta.conn.prepareStatement("update usuario set ativo=?, nome=?, endereço=?, telefone=?, celular=?, email=?, cargo=?, salário=?, login=?, senha=?, confirma_senha, observações=? where código=?");//passagem do sql para inserção
             pst.setString(1, (String) txtAtivo.getSelectedItem());//passagem dos parametros para o banco
             pst.setString(2,txtNome.getText());
             pst.setString(3,txtEndereco.getText());
@@ -397,7 +401,7 @@ public class TelaUsuario extends javax.swing.JFrame {
         txtLogin.setText("");
         ptxtSenha.setText("");
         txtObs.setText("");
-        
+
         txtAtivo.setEnabled(true);
         txtNome.setEnabled(true);
         txtEndereco.setEnabled(true);
@@ -409,17 +413,13 @@ public class TelaUsuario extends javax.swing.JFrame {
         txtLogin.setEnabled(true);
         ptxtSenha.setEnabled(true);
         txtObs.setEnabled(true);
-        
+
         btnAlterar.setEnabled(true);
         btnConsultar.setEnabled(true);
         btnSalvar.setEnabled(true);
         btnIncluir.setEnabled(false);
-   
-    }//GEN-LAST:event_btnIncluirActionPerformed
 
-    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_btnSairActionPerformed
+    }//GEN-LAST:event_btnIncluirActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         txtAtivo.setSelectedItem("");
@@ -445,12 +445,12 @@ public class TelaUsuario extends javax.swing.JFrame {
         txtLogin.setEnabled(false);
         ptxtSenha.setEnabled(false);
         txtObs.setEnabled(false);
-        
+
         btnAlterar.setEnabled(false);
         btnConsultar.setEnabled(false);
         btnSalvar.setEnabled(false);
         btnIncluir.setEnabled(true);
-        
+
         try {
             PreparedStatement pst = conecta.conn.prepareStatement("insert into funcionário (ativo, nome, endereço, telefone, celular, email, cargo, salário, senha, confirma_senha, observações)values(?,?,?,?,?,?,?,?,?,?,?)");
             pst.setString(1, (String) txtAtivo.getSelectedItem());
@@ -471,43 +471,10 @@ public class TelaUsuario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnSairActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TelaUsuario().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
