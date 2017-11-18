@@ -14,7 +14,6 @@ public class TelaLogin extends javax.swing.JFrame {
     
     public TelaLogin() {
         initComponents();
-        con.conexao();//chamada do metodo de conexão
     }
 
 
@@ -135,16 +134,17 @@ public class TelaLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
+        con.conexao();
         try {
             con.executaSQL("SELECT login,senha FROM usuario WHERE login='"+ this.txtUsuario.getText() + "'");
             con.res.first();
             if(con.res.getString("senha").equals(this.ptxtSenha.getText())){
+                con.desconecta();
                 TelaPrincipal pri = new TelaPrincipal();
                 pri.setVisible(true);
                 this.dispose();
             } else JOptionPane.showMessageDialog(null, "A senha está incorreta. Verifique e tente novamente.");
         } catch (SQLException ex) {
-            Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "O usuário não foi encontrado no banco. Verifique e tente novamente.");
         }
         

@@ -24,9 +24,10 @@ public class ConectaBanco {
         try {//tentativa inicial
             System.setProperty("jdbc.Drivers", driver);//seta a propriedade do driver de conexão
             conn = DriverManager.getConnection(caminho, usuario, senha);//realiza a conexão com o banco de dados
-            JOptionPane.showMessageDialog(null, "Conectado com Sucesso!");//imprimi uma caixa de mensagem
+            //JOptionPane.showMessageDialog(null, "Conectado com Sucesso!");//imprimi uma caixa de mensagem
+            System.out.println("Conectado com sucesso!");
         } catch (SQLException ex) {//excessão
-            JOptionPane.showMessageDialog(null, "Erro de Conexão!\n Erro"+ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro de Conexão!\n Erro "+ex.getMessage());
         }
         
     }
@@ -42,7 +43,8 @@ public class ConectaBanco {
     public void desconecta(){//metodo para fechar a conexao com o banco de dados
         try {
             conn.close();//fecha a conexão
-            JOptionPane.showMessageDialog(null, "Desconectado com Sucesso!");
+            //JOptionPane.showMessageDialog(null, "Desconectado com Sucesso!");
+            System.out.println("Desconectado com sucesso!");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao fechar a Conexão!\n Erro"+ex.getMessage());
         }
