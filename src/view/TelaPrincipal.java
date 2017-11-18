@@ -1,7 +1,7 @@
 
 package view;
 
-import control.ConectaBanco;
+import dao.ConectaBanco;
 
 
 public class TelaPrincipal extends javax.swing.JFrame {
