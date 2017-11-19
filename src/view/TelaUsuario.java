@@ -232,6 +232,11 @@ public class TelaUsuario extends javax.swing.JFrame {
         btnConsultar.setText("CONSULTAR");
         btnConsultar.setToolTipText("Consultar");
         btnConsultar.setEnabled(false);
+        btnConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarActionPerformed(evt);
+            }
+        });
 
         btnSair.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/cross.png"))); // NOI18N
@@ -470,6 +475,10 @@ public class TelaUsuario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Erro na Inserção\n ERRO!:" +ex);
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnConsultarActionPerformed
 
     /**
      * @param args the command line arguments

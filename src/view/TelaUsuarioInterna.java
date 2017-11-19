@@ -6,10 +6,13 @@
 package view;
 
 import dao.ConectaBanco;
-import static java.awt.Frame.MAXIMIZED_BOTH;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+ import java.sql.*;
+ import javax.swing.*;
 
 /**
  *
@@ -22,7 +25,6 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
      */
     public TelaUsuarioInterna() {
         initComponents();
-        conecta.conexao();
     }
     
     public void LimparCampos(){
@@ -66,6 +68,10 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
         ptxtSenha.setEnabled(false);
         txtObs.setEnabled(false);
     }
+    
+    public void PreencherCampos(){
+  
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -107,6 +113,10 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
         lblEmail = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
         btnCancelar = new javax.swing.JButton();
+        btnPrimeiro = new javax.swing.JButton();
+        btnAnterior = new javax.swing.JButton();
+        btnProximo = new javax.swing.JButton();
+        btnUltimo = new javax.swing.JButton();
 
         setTitle("Cadastro de Usuários");
 
@@ -125,7 +135,7 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
         lblCargo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblCargo.setText("Cargo ");
 
-        txtCargo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Gerente", "Vendedor" }));
+        txtCargo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vendedor", "Gerente" }));
         txtCargo.setEnabled(false);
 
         lblSalario.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -239,7 +249,7 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
         lblAtivo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblAtivo.setText("Ativo");
 
-        txtAtivo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Sim", "Não" }));
+        txtAtivo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sim", "Não" }));
         txtAtivo.setEnabled(false);
 
         lblNome.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -369,6 +379,46 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
             }
         });
 
+        btnPrimeiro.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnPrimeiro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/resultset_first.png"))); // NOI18N
+        btnPrimeiro.setToolTipText("Primeiro");
+        btnPrimeiro.setEnabled(false);
+        btnPrimeiro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrimeiroActionPerformed(evt);
+            }
+        });
+
+        btnAnterior.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnAnterior.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/resultset_previous.png"))); // NOI18N
+        btnAnterior.setToolTipText("Anterior");
+        btnAnterior.setEnabled(false);
+        btnAnterior.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnteriorActionPerformed(evt);
+            }
+        });
+
+        btnProximo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnProximo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/resultset_next.png"))); // NOI18N
+        btnProximo.setToolTipText("Próximo");
+        btnProximo.setEnabled(false);
+        btnProximo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProximoActionPerformed(evt);
+            }
+        });
+
+        btnUltimo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnUltimo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/resultset_last.png"))); // NOI18N
+        btnUltimo.setToolTipText("Último");
+        btnUltimo.setEnabled(false);
+        btnUltimo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUltimoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -382,10 +432,18 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnConsultar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnSalvar)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCancelar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnPrimeiro, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAnterior, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnProximo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnUltimo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnFechar))
                     .addComponent(pnlContatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnlPessoais, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -406,7 +464,11 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
                     .addComponent(btnSalvar)
                     .addComponent(btnIncluir)
                     .addComponent(btnConsultar)
-                    .addComponent(btnCancelar))
+                    .addComponent(btnCancelar)
+                    .addComponent(btnPrimeiro)
+                    .addComponent(btnAnterior)
+                    .addComponent(btnProximo)
+                    .addComponent(btnUltimo))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
@@ -415,7 +477,6 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
 
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
         HabilitarCampos();
-        LimparCampos();
         
         btnSalvar.setEnabled(true);
         btnIncluir.setEnabled(false);
@@ -424,7 +485,33 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnIncluirActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-
+        try {
+            conecta.conexao();
+            PreparedStatement pst = conecta.conn.prepareStatement("insert into usuario (ativo, nome, endereco_completo, telefone, celular, email, cargo, salario, login, senha, obs)values(?,?,?,?,?,?,?,?,?,?,?)");
+            pst.setString(1, (String) txtAtivo.getSelectedItem());
+            pst.setString(2,txtNome.getText());
+            pst.setString(3,txtEndereco.getText());
+            pst.setString(4,txtTelefone.getText());
+            pst.setString(5,txtCelular.getText());
+            pst.setString(6,txtEmail.getText());
+            pst.setString(7, (String) txtCargo.getSelectedItem());
+            pst.setFloat(8,Float.parseFloat(txtSalario.getText()));
+            pst.setString(9,txtLogin.getText());
+            pst.setString(10,ptxtSenha.getText());
+            pst.setString(11,txtObs.getText());
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(rootPane, "Salvo com Sucesso!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Erro no salvamento\n ERRO!: " +ex);
+        }
+        LimparCampos();
+        DesabilitarCampos();
+        
+        btnSalvar.setEnabled(false);
+        btnIncluir.setEnabled(true);
+        btnConsultar.setEnabled(true);
+        btnCancelar.setEnabled(false);
+        conecta.desconecta();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
@@ -432,20 +519,59 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnFecharActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        
+        HabilitarCampos();
+        btnSalvar.setEnabled(false);
+        btnIncluir.setEnabled(false);
+        btnConsultar.setEnabled(false);
+        btnCancelar.setEnabled(true);
+        btnPrimeiro.setEnabled(true);
+        btnAnterior.setEnabled(true);
+        btnProximo.setEnabled(true);
+        btnUltimo.setEnabled(true);
+        JOptionPane.showMessageDialog(null, "Este botão ainda não está totalmente funcional.");
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        LimparCampos();
+        DesabilitarCampos();
+        
+        btnSalvar.setEnabled(false);
+        btnIncluir.setEnabled(true);
+        btnConsultar.setEnabled(true);
+        btnCancelar.setEnabled(false);
+        btnPrimeiro.setEnabled(false);
+        btnAnterior.setEnabled(false);
+        btnProximo.setEnabled(false);
+        btnUltimo.setEnabled(false);
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnPrimeiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrimeiroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPrimeiroActionPerformed
+
+    private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAnteriorActionPerformed
+
+    private void btnProximoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProximoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnProximoActionPerformed
+
+    private void btnUltimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUltimoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnUltimoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAnterior;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnFechar;
     private javax.swing.JButton btnIncluir;
+    private javax.swing.JButton btnPrimeiro;
+    private javax.swing.JButton btnProximo;
     private javax.swing.JButton btnSalvar;
+    private javax.swing.JButton btnUltimo;
     private javax.swing.JLabel lblAtivo;
     private javax.swing.JLabel lblCargo;
     private javax.swing.JLabel lblCelular;
