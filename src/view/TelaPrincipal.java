@@ -111,7 +111,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
-            
         try {
             TelaUsuarioInterna frm = new TelaUsuarioInterna();
             PainelPrincipal.add(frm);
@@ -129,8 +128,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_txtVendaActionPerformed
 
     private void txtProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProdutoActionPerformed
-            TelaProduto frm = new TelaProduto();
-            frm.setVisible(true);  
+        try {
+            TelaProdutoInterna frm = new TelaProdutoInterna();
+            PainelPrincipal.add(frm);
+            frm.setVisible(true);
+            frm.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_txtProdutoActionPerformed
 
     private void txtSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtSairMouseClicked

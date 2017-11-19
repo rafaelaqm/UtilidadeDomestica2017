@@ -133,18 +133,18 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
         pnlProfissionais.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dados Profissionais", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12)))); // NOI18N
 
         lblCargo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblCargo.setText("Cargo ");
+        lblCargo.setText("Cargo (*)");
 
         txtCargo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vendedor", "Gerente" }));
         txtCargo.setEnabled(false);
 
         lblSalario.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblSalario.setText("Salário");
+        lblSalario.setText("Salário (*)");
 
         txtLogin.setEnabled(false);
 
         lblSenha.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblSenha.setText("Senha");
+        lblSenha.setText("Senha (*)");
 
         lblObs.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblObs.setText("Observações");
@@ -155,7 +155,7 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
         ptxtSenha.setEnabled(false);
 
         lblLogin.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblLogin.setText("Login");
+        lblLogin.setText("Login  (*)");
 
         txtSalario.setEnabled(false);
 
@@ -171,18 +171,16 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
                             .addComponent(lblObs)
                             .addGroup(pnlProfissionaisLayout.createSequentialGroup()
                                 .addGroup(pnlProfissionaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(pnlProfissionaisLayout.createSequentialGroup()
-                                        .addComponent(txtCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(pnlProfissionaisLayout.createSequentialGroup()
-                                        .addComponent(lblCargo)
-                                        .addGap(115, 115, 115)
-                                        .addComponent(lblSalario)
-                                        .addGap(100, 100, 100)
-                                        .addComponent(lblLogin)))
+                                    .addComponent(txtCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblCargo))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(pnlProfissionaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblSalario))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(pnlProfissionaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblLogin)
+                                    .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(pnlProfissionaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(ptxtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -247,13 +245,13 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
         pnlPessoais.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dados Pessoais", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
         lblAtivo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblAtivo.setText("Ativo");
+        lblAtivo.setText("Ativo (*)");
 
         txtAtivo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sim", "Não" }));
         txtAtivo.setEnabled(false);
 
         lblNome.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblNome.setText("Nome");
+        lblNome.setText("Nome (*)");
 
         txtNome.setEnabled(false);
 
@@ -485,33 +483,37 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnIncluirActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        try {
-            conecta.conexao();
-            PreparedStatement pst = conecta.conn.prepareStatement("insert into usuario (ativo, nome, endereco_completo, telefone, celular, email, cargo, salario, login, senha, obs)values(?,?,?,?,?,?,?,?,?,?,?)");
-            pst.setString(1, (String) txtAtivo.getSelectedItem());
-            pst.setString(2,txtNome.getText());
-            pst.setString(3,txtEndereco.getText());
-            pst.setString(4,txtTelefone.getText());
-            pst.setString(5,txtCelular.getText());
-            pst.setString(6,txtEmail.getText());
-            pst.setString(7, (String) txtCargo.getSelectedItem());
-            pst.setFloat(8,Float.parseFloat(txtSalario.getText()));
-            pst.setString(9,txtLogin.getText());
-            pst.setString(10,ptxtSenha.getText());
-            pst.setString(11,txtObs.getText());
-            pst.executeUpdate();
-            JOptionPane.showMessageDialog(rootPane, "Salvo com Sucesso!");
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(rootPane, "Erro no salvamento\n ERRO!: " +ex);
+        if((txtAtivo.getSelectedItem()==null) || (txtLogin.getText()==null || txtLogin.getText().trim().equals("")) || (ptxtSenha.getText()==null || ptxtSenha.getText().trim().equals("")) || (txtLogin.getText()==null || txtLogin.getText().trim().equals("")) || (txtCargo.getSelectedItem()==null) || (txtNome.getText()==null || txtNome.getText().trim().equals("")) || (txtSalario.getText()==null || txtSalario.getText().trim().equals(""))){
+            JOptionPane.showMessageDialog(null, "Existe campo obrigatório ainda não preenchido. Verifique e tente novamente.");
+        }else{
+            try {
+                conecta.conexao();
+                PreparedStatement pst = conecta.conn.prepareStatement("insert into usuario (ativo, nome, endereco_completo, telefone, celular, email, cargo, salario, login, senha, obs)values(?,?,?,?,?,?,?,?,?,?,?)");
+                pst.setString(1, (String) txtAtivo.getSelectedItem());
+                pst.setString(2,txtNome.getText());
+                pst.setString(3,txtEndereco.getText());
+                pst.setString(4,txtTelefone.getText());
+                pst.setString(5,txtCelular.getText());
+                pst.setString(6,txtEmail.getText());
+                pst.setString(7, (String) txtCargo.getSelectedItem());
+                pst.setDouble(8,Double.valueOf(txtSalario.getText()));
+                pst.setString(9,txtLogin.getText());
+                pst.setString(10,ptxtSenha.getText());
+                pst.setString(11,txtObs.getText());
+                pst.executeUpdate();
+                JOptionPane.showMessageDialog(rootPane, "Salvo com Sucesso!");
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(rootPane, "Erro no salvamento\n ERRO!: "+ex);
+            }
+            LimparCampos();
+            DesabilitarCampos();
+
+            btnSalvar.setEnabled(false);
+            btnIncluir.setEnabled(true);
+            btnConsultar.setEnabled(true);
+            btnCancelar.setEnabled(false);
+            conecta.desconecta();
         }
-        LimparCampos();
-        DesabilitarCampos();
-        
-        btnSalvar.setEnabled(false);
-        btnIncluir.setEnabled(true);
-        btnConsultar.setEnabled(true);
-        btnCancelar.setEnabled(false);
-        conecta.desconecta();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
@@ -528,7 +530,9 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
         btnAnterior.setEnabled(true);
         btnProximo.setEnabled(true);
         btnUltimo.setEnabled(true);
-        JOptionPane.showMessageDialog(null, "Este botão ainda não está totalmente funcional.");
+        
+        JOptionPane.showMessageDialog(null, "Este botão ainda não está totalmente funcional.\nO botão Cancelar será ativado automaticamente.");
+        btnCancelar.doClick();
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
