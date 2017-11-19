@@ -6,6 +6,7 @@
 package view;
 
 import dao.ConectaBanco;
+import static java.awt.Frame.MAXIMIZED_BOTH;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -23,6 +24,48 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
         initComponents();
         conecta.conexao();
     }
+    
+    public void LimparCampos(){
+        txtAtivo.setSelectedItem("");
+        txtNome.setText("");
+        txtEndereco.setText("");
+        txtTelefone.setText("");
+        txtCelular.setText("");
+        txtEmail.setText("");
+        txtCargo.setSelectedItem("");
+        txtSalario.setText("");
+        txtLogin.setText("");
+        ptxtSenha.setText("");
+        txtObs.setText("");
+    }
+    
+    public void HabilitarCampos(){
+        txtAtivo.setEnabled(true);
+        txtNome.setEnabled(true);
+        txtEndereco.setEnabled(true);
+        txtTelefone.setEnabled(true);
+        txtCelular.setEnabled(true);
+        txtEmail.setEnabled(true);
+        txtCargo.setEnabled(true);
+        txtSalario.setEnabled(true);
+        txtLogin.setEnabled(true);
+        ptxtSenha.setEnabled(true);
+        txtObs.setEnabled(true);
+    }
+    
+    public void DesabilitarCampos(){
+        txtAtivo.setEnabled(false);
+        txtNome.setEnabled(false);
+        txtEndereco.setEnabled(false);
+        txtTelefone.setEnabled(false);
+        txtCelular.setEnabled(false);
+        txtEmail.setEnabled(false);
+        txtCargo.setEnabled(false);
+        txtSalario.setEnabled(false);
+        txtLogin.setEnabled(false);
+        ptxtSenha.setEnabled(false);
+        txtObs.setEnabled(false);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -33,7 +76,6 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnAlterar = new javax.swing.JButton();
         btnIncluir = new javax.swing.JButton();
         pnlProfissionais = new javax.swing.JPanel();
         lblCargo = new javax.swing.JLabel();
@@ -49,7 +91,7 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
         txtSalario = new javax.swing.JTextField();
         btnSalvar = new javax.swing.JButton();
         btnConsultar = new javax.swing.JButton();
-        btnSair = new javax.swing.JButton();
+        btnFechar = new javax.swing.JButton();
         pnlPessoais = new javax.swing.JPanel();
         lblAtivo = new javax.swing.JLabel();
         txtAtivo = new javax.swing.JComboBox<>();
@@ -64,22 +106,12 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
         txtCelular = new javax.swing.JFormattedTextField();
         lblEmail = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
+        btnCancelar = new javax.swing.JButton();
 
         setTitle("Cadastro de Usuários");
 
-        btnAlterar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/application_edit.png"))); // NOI18N
-        btnAlterar.setText("ALTERAR");
-        btnAlterar.setToolTipText("Alterar");
-        btnAlterar.setEnabled(false);
-        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAlterarActionPerformed(evt);
-            }
-        });
-
         btnIncluir.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnIncluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/application_add.png"))); // NOI18N
+        btnIncluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add.png"))); // NOI18N
         btnIncluir.setText("INCLUIR");
         btnIncluir.setToolTipText("Incluir");
         btnIncluir.addActionListener(new java.awt.event.ActionListener() {
@@ -147,7 +179,7 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
                                     .addComponent(lblSenha))))
                         .addGap(200, 200, 200))
                     .addGroup(pnlProfissionaisLayout.createSequentialGroup()
-                        .addComponent(pnObs)
+                        .addComponent(pnObs, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addContainerGap())))
         );
         pnlProfissionaisLayout.setVerticalGroup(
@@ -186,15 +218,19 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
         btnConsultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/application_form_magnify.png"))); // NOI18N
         btnConsultar.setText("CONSULTAR");
         btnConsultar.setToolTipText("Consultar");
-        btnConsultar.setEnabled(false);
-
-        btnSair.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/cross.png"))); // NOI18N
-        btnSair.setText("SAIR");
-        btnSair.setToolTipText("Sair");
-        btnSair.addActionListener(new java.awt.event.ActionListener() {
+        btnConsultar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSairActionPerformed(evt);
+                btnConsultarActionPerformed(evt);
+            }
+        });
+
+        btnFechar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/application_home.png"))); // NOI18N
+        btnFechar.setText("FECHAR");
+        btnFechar.setToolTipText("Fechar");
+        btnFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharActionPerformed(evt);
             }
         });
 
@@ -322,6 +358,17 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        btnCancelar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cancel.png"))); // NOI18N
+        btnCancelar.setText("CANCELAR");
+        btnCancelar.setToolTipText("Cancelar");
+        btnCancelar.setEnabled(false);
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -331,16 +378,15 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlProfissionais, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnAlterar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnConsultar)
-                        .addGap(18, 18, 18)
                         .addComponent(btnIncluir)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnConsultar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCancelar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnSalvar)
                         .addGap(18, 18, 18)
-                        .addComponent(btnSair))
+                        .addComponent(btnFechar))
                     .addComponent(pnlContatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnlPessoais, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -356,131 +402,49 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
                 .addComponent(pnlProfissionais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSair)
+                    .addComponent(btnFechar)
                     .addComponent(btnSalvar)
                     .addComponent(btnIncluir)
                     .addComponent(btnConsultar)
-                    .addComponent(btnAlterar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnCancelar))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-
-        try {
-            PreparedStatement pst = conecta.conn.prepareStatement("update usuario set ativo=?, nome=?, endereço=?, telefone=?, celular=?, email=?, cargo=?, salário=?, login=?, senha=?, confirma_senha, observações=? where código=?");//passagem do sql para inserção
-            pst.setString(1, (String) txtAtivo.getSelectedItem());//passagem dos parametros para o banco
-            pst.setString(2,txtNome.getText());
-            pst.setString(3,txtEndereco.getText());
-            pst.setString(4,txtTelefone.getText());
-            pst.setString(5,txtCelular.getText());
-            pst.setString(6,txtEmail.getText());
-            pst.setString(7, (String) txtCargo.getSelectedItem());
-            pst.setFloat(8,Float.parseFloat(txtSalario.getText()));
-            pst.setString(9, txtLogin.getText());
-            pst.setString(10,ptxtSenha.getText());
-            pst.setString(12,txtObs.getText());
-            pst.executeUpdate();//executa a inserção
-            JOptionPane.showMessageDialog(rootPane, "Alterado com Sucesso!");
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(rootPane, "Erro ao Alterar\n ERRO!:" +ex);
-        }
-    }//GEN-LAST:event_btnAlterarActionPerformed
-
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
-        txtAtivo.setSelectedItem("");
-        txtNome.setText("");
-        txtEndereco.setText("");
-        txtTelefone.setText("");
-        txtCelular.setText("");
-        txtEmail.setText("");
-        txtCargo.setSelectedItem("");
-        txtSalario.setText("");
-        txtLogin.setText("");
-        ptxtSenha.setText("");
-        txtObs.setText("");
-
-        txtAtivo.setEnabled(true);
-        txtNome.setEnabled(true);
-        txtEndereco.setEnabled(true);
-        txtTelefone.setEnabled(true);
-        txtCelular.setEnabled(true);
-        txtEmail.setEnabled(true);
-        txtCargo.setEnabled(true);
-        txtSalario.setEnabled(true);
-        txtLogin.setEnabled(true);
-        ptxtSenha.setEnabled(true);
-        txtObs.setEnabled(true);
-
-        btnAlterar.setEnabled(true);
-        btnConsultar.setEnabled(true);
+        HabilitarCampos();
+        LimparCampos();
+        
         btnSalvar.setEnabled(true);
         btnIncluir.setEnabled(false);
-
+        btnConsultar.setEnabled(false);
+        btnCancelar.setEnabled(true);
     }//GEN-LAST:event_btnIncluirActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        txtAtivo.setSelectedItem("");
-        txtNome.setText("");
-        txtEndereco.setText("");
-        txtTelefone.setText("");
-        txtCelular.setText("");
-        txtEmail.setText("");
-        txtCargo.setSelectedItem("");
-        txtSalario.setText("");
-        txtLogin.setText("");
-        ptxtSenha.setText("");
-        txtObs.setText("");
 
-        txtAtivo.setEnabled(false);
-        txtNome.setEnabled(false);
-        txtEndereco.setEnabled(false);
-        txtTelefone.setEnabled(false);
-        txtCelular.setEnabled(false);
-        txtEmail.setEnabled(false);
-        txtCargo.setEnabled(false);
-        txtSalario.setEnabled(false);
-        txtLogin.setEnabled(false);
-        ptxtSenha.setEnabled(false);
-        txtObs.setEnabled(false);
-
-        btnAlterar.setEnabled(false);
-        btnConsultar.setEnabled(false);
-        btnSalvar.setEnabled(false);
-        btnIncluir.setEnabled(true);
-
-        try {
-            PreparedStatement pst = conecta.conn.prepareStatement("insert into funcionário (ativo, nome, endereço, telefone, celular, email, cargo, salário, senha, confirma_senha, observações)values(?,?,?,?,?,?,?,?,?,?,?)");
-            pst.setString(1, (String) txtAtivo.getSelectedItem());
-            pst.setString(2,txtNome.getText());
-            pst.setString(3,txtEndereco.getText());
-            pst.setString(4,txtTelefone.getText());
-            pst.setString(5,txtCelular.getText());
-            pst.setString(6,txtEmail.getText());
-            pst.setString(7, (String) txtCargo.getSelectedItem());
-            pst.setFloat(8,Float.parseFloat(txtSalario.getText()));
-            pst.setString(9,txtLogin.getText());
-            pst.setString(10,ptxtSenha.getText());
-            pst.setString(12,txtObs.getText());
-            pst.executeUpdate();
-            JOptionPane.showMessageDialog(rootPane, "Salvo com Sucesso!");
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(rootPane, "Erro na Inserção\n ERRO!:" +ex);
-        }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+    private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
         this.dispose();
-    }//GEN-LAST:event_btnSairActionPerformed
+    }//GEN-LAST:event_btnFecharActionPerformed
+
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        
+    }//GEN-LAST:event_btnConsultarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAlterar;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnConsultar;
+    private javax.swing.JButton btnFechar;
     private javax.swing.JButton btnIncluir;
-    private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JLabel lblAtivo;
     private javax.swing.JLabel lblCargo;

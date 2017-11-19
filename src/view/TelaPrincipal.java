@@ -1,6 +1,10 @@
 
 package view;
 
+import java.beans.PropertyVetoException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class TelaPrincipal extends javax.swing.JFrame {
     public TelaPrincipal() {
@@ -107,9 +111,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
+            
+        try {
             TelaUsuarioInterna frm = new TelaUsuarioInterna();
             PainelPrincipal.add(frm);
             frm.setVisible(true);
+            frm.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
        
     }//GEN-LAST:event_txtUsuarioActionPerformed
 
