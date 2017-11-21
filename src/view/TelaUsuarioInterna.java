@@ -20,12 +20,24 @@ import javax.swing.*;
  */
 public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
     ConectaBanco conecta = new ConectaBanco();
-    /**
-     * Creates new form TelaUsuarioInterna
-     */
+    public ResultSet res_tudo;
     
     public TelaUsuarioInterna() {
         initComponents();
+        conecta.conexao();
+        
+        try {
+            String sql = "SELECT * FROM usuario";
+            PreparedStatement stm;
+            stm = conecta.conn.prepareStatement(sql);
+            res_tudo = stm.executeQuery(sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaUsuarioInterna.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Não foi possível efetuar o acesso ao banco de dados.\nErro: " + ex);
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Problema de sistema: "+ex);
+        }
+
     }
     
     public void LimparCampos(){
@@ -70,25 +82,30 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
         txtObs.setEnabled(false);
     }
     
+    public void HabilitaBotoesConsulta(){
+            btnSalvar.setEnabled(false);
+            btnIncluir.setEnabled(false);
+            btnConsultar.setEnabled(false);
+            btnCancelar.setEnabled(true);
+            btnPrimeiro.setEnabled(true);
+            btnAnterior.setEnabled(true);
+            btnProximo.setEnabled(true);
+            btnUltimo.setEnabled(true);
+    }
+    
     public void PreencherCampos(){
         conecta.conexao();
         try {
-            String sql = "SELECT * FROM usuario";
-            PreparedStatement stm = conecta.conn.prepareStatement(sql);
-            ResultSet res = stm.executeQuery(sql);
-            res.first();
-            
-            //Preenchendo os campos
-            txtAtivo.setSelectedItem(res.getString("ativo"));
-            txtNome.setText(res.getString("nome"));
-            txtEndereco.setText(res.getString("endereco_completo"));
-            txtTelefone.setText(res.getString("telefone"));
-            txtCelular.setText(res.getString("celular"));
-            txtEmail.setText(res.getString("email"));
-            txtCargo.setSelectedItem(res.getString("cargo"));
-            txtSalario.setText(res.getString("salario"));
-            txtLogin.setText(res.getString("login"));
-            txtObs.setText(res.getString("obs"));
+            txtAtivo.setSelectedItem(res_tudo.getString("ativo"));
+            txtNome.setText(res_tudo.getString("nome"));
+            txtEndereco.setText(res_tudo.getString("endereco_completo"));
+            txtTelefone.setText(res_tudo.getString("telefone"));
+            txtCelular.setText(res_tudo.getString("celular"));
+            txtEmail.setText(res_tudo.getString("email"));
+            txtCargo.setSelectedItem(res_tudo.getString("cargo"));
+            txtSalario.setText(res_tudo.getString("salario"));
+            txtLogin.setText(res_tudo.getString("login"));
+            txtObs.setText(res_tudo.getString("obs"));
                  
         } catch (SQLException ex) {
             Logger.getLogger(TelaUsuarioInterna.class.getName()).log(Level.SEVERE, null, ex);
@@ -546,19 +563,17 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnFecharActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        HabilitarCampos();
-        btnSalvar.setEnabled(false);
-        btnIncluir.setEnabled(false);
-        btnConsultar.setEnabled(false);
-        btnCancelar.setEnabled(true);
-        btnPrimeiro.setEnabled(true);
-        btnAnterior.setEnabled(true);
-        btnProximo.setEnabled(true);
-        btnUltimo.setEnabled(true);
-        PreencherCampos();
-        
-        //JOptionPane.showMessageDialog(null, "Este botão ainda não está totalmente funcional.\nO botão Cancelar será ativado automaticamente.");
-        //btnCancelar.doClick();
+        try {
+            HabilitarCampos();
+            HabilitaBotoesConsulta();
+            res_tudo.first();
+            PreencherCampos();
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaUsuarioInterna.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Não foi possível efetuar o acesso ao banco de dados.\nErro: " + ex);
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Problema de sistema: "+ex);
+        }
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -576,19 +591,59 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnPrimeiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrimeiroActionPerformed
-        // TODO add your handling code here:
+        try {
+            HabilitarCampos();
+            HabilitaBotoesConsulta();
+            res_tudo.first();
+            PreencherCampos();
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaUsuarioInterna.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Não foi possível efetuar o acesso ao banco de dados.\nErro: " + ex);
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Problema de sistema: "+ex);
+        }
     }//GEN-LAST:event_btnPrimeiroActionPerformed
 
     private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
-        // TODO add your handling code here:
+        try {
+            HabilitarCampos();
+            HabilitaBotoesConsulta();
+            res_tudo.previous();
+            PreencherCampos();
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaUsuarioInterna.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Não foi possível efetuar o acesso ao banco de dados.\nErro: " + ex);
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Problema de sistema: "+ex);
+        }
     }//GEN-LAST:event_btnAnteriorActionPerformed
 
     private void btnProximoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProximoActionPerformed
-        // TODO add your handling code here:
+        try {
+            HabilitarCampos();
+            HabilitaBotoesConsulta();
+            res_tudo.next();
+            PreencherCampos();
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaUsuarioInterna.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Não foi possível efetuar o acesso ao banco de dados.\nErro: " + ex);
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Problema de sistema: "+ex);
+        }
     }//GEN-LAST:event_btnProximoActionPerformed
 
     private void btnUltimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUltimoActionPerformed
-        // TODO add your handling code here:
+        try {
+            HabilitarCampos();
+            HabilitaBotoesConsulta();
+            res_tudo.last();
+            PreencherCampos();
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaUsuarioInterna.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Não foi possível efetuar o acesso ao banco de dados.\nErro: " + ex);
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Problema de sistema: "+ex);
+        }
     }//GEN-LAST:event_btnUltimoActionPerformed
 
 
