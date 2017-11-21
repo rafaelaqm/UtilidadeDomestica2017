@@ -11,8 +11,8 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
- import java.sql.*;
- import javax.swing.*;
+import java.sql.*;
+import javax.swing.*;
 
 /**
  *
@@ -23,6 +23,7 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
     /**
      * Creates new form TelaUsuarioInterna
      */
+    
     public TelaUsuarioInterna() {
         initComponents();
     }
@@ -70,7 +71,31 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
     }
     
     public void PreencherCampos(){
-  
+        conecta.conexao();
+        try {
+            String sql = "SELECT * FROM usuario";
+            PreparedStatement stm = conecta.conn.prepareStatement(sql);
+            ResultSet res = stm.executeQuery(sql);
+            res.first();
+            
+            //Preenchendo os campos
+            txtAtivo.setSelectedItem(res.getString("ativo"));
+            txtNome.setText(res.getString("nome"));
+            txtEndereco.setText(res.getString("endereco_completo"));
+            txtTelefone.setText(res.getString("telefone"));
+            txtCelular.setText(res.getString("celular"));
+            txtEmail.setText(res.getString("email"));
+            txtCargo.setSelectedItem(res.getString("cargo"));
+            txtSalario.setText(res.getString("salario"));
+            txtLogin.setText(res.getString("login"));
+            txtObs.setText(res.getString("obs"));
+                 
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaUsuarioInterna.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Não foi possível efetuar o acesso ao banco de dados.\nErro: " + ex);
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Problema de sistema: "+ex);
+        }
     }
 
     /**
@@ -530,9 +555,10 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
         btnAnterior.setEnabled(true);
         btnProximo.setEnabled(true);
         btnUltimo.setEnabled(true);
+        PreencherCampos();
         
-        JOptionPane.showMessageDialog(null, "Este botão ainda não está totalmente funcional.\nO botão Cancelar será ativado automaticamente.");
-        btnCancelar.doClick();
+        //JOptionPane.showMessageDialog(null, "Este botão ainda não está totalmente funcional.\nO botão Cancelar será ativado automaticamente.");
+        //btnCancelar.doClick();
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

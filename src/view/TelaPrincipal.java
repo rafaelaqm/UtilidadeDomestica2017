@@ -4,6 +4,7 @@ package view;
 import java.beans.PropertyVetoException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 
 public class TelaPrincipal extends javax.swing.JFrame {
@@ -72,6 +73,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         txtCadastro.add(txtUsuario);
 
+        txtProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/wrench_orange.png"))); // NOI18N
         txtProduto.setText("Produto");
         txtProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -123,8 +125,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUsuarioActionPerformed
 
     private void txtVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtVendaActionPerformed
-            TelaVenda frm = new TelaVenda();
-            frm.setVisible(true);
+            JOptionPane.showMessageDialog(null, "Janela ainda não implementada");
     }//GEN-LAST:event_txtVendaActionPerformed
 
     private void txtProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProdutoActionPerformed
