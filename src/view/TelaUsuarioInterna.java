@@ -12,7 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import java.sql.*;
-import javax.swing.*;
 
 /**
  *
@@ -22,12 +21,9 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
     ConectaBanco conecta = new ConectaBanco();
     public ResultSet res_tudo;
     
-    public TelaUsuarioInterna() {
-        initComponents();
-        conecta.conexao();
-        
+    public void AtualizarRecordSet(){
         try {
-            String sql = "SELECT * FROM usuario";
+            String sql = "SELECT * FROM usuario ORDER BY idusuario";
             PreparedStatement stm;
             stm = conecta.conn.prepareStatement(sql);
             res_tudo = stm.executeQuery(sql);
@@ -37,10 +33,30 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
         } catch (Exception ex){
             JOptionPane.showMessageDialog(null, "Problema de sistema: "+ex);
         }
+    }
+    
+    public TelaUsuarioInterna() {
+        initComponents();
+        conecta.conexao();
+        HabilitarBotoesPadrao();
+        AtualizarRecordSet();
+        
+        /*try {
+            String sql = "SELECT * FROM usuario ORDER BY nome";
+            PreparedStatement stm;
+            stm = conecta.conn.prepareStatement(sql);
+            res_tudo = stm.executeQuery(sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaUsuarioInterna.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Não foi possível efetuar o acesso ao banco de dados.\nErro: " + ex);
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Problema de sistema: "+ex);
+        }*/
 
     }
     
     public void LimparCampos(){
+        txtIdUsuario.setText("");
         txtAtivo.setSelectedItem("");
         txtNome.setText("");
         txtEndereco.setText("");
@@ -83,19 +99,45 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
     }
     
     public void HabilitaBotoesConsulta(){
-            btnSalvar.setEnabled(false);
-            btnIncluir.setEnabled(false);
-            btnConsultar.setEnabled(false);
-            btnCancelar.setEnabled(true);
-            btnPrimeiro.setEnabled(true);
-            btnAnterior.setEnabled(true);
-            btnProximo.setEnabled(true);
-            btnUltimo.setEnabled(true);
+        btnIncluir.setVisible(false);
+        btnConsultar.setVisible(false);
+        btnSalvar.setVisible(false);
+        btnAlterar.setVisible(true);
+        btnCancelar.setVisible(true);
+        btnPrimeiro.setVisible(true);
+        btnAnterior.setVisible(true);
+        btnProximo.setVisible(true);
+        btnUltimo.setVisible(true);
     }
     
-    public void PreencherCampos(){
+    public void HabilitarBotoesInserir(){
+        btnIncluir.setVisible(false);
+        btnConsultar.setVisible(false);
+        btnSalvar.setVisible(true);
+        btnAlterar.setVisible(false);
+        btnCancelar.setVisible(true);
+        btnPrimeiro.setVisible(false);
+        btnAnterior.setVisible(false);
+        btnProximo.setVisible(false);
+        btnUltimo.setVisible(false);
+    }
+    
+    public void HabilitarBotoesPadrao(){
+        btnIncluir.setVisible(true);
+        btnConsultar.setVisible(true);
+        btnSalvar.setVisible(false);
+        btnAlterar.setVisible(false);
+        btnCancelar.setVisible(false);
+        btnPrimeiro.setVisible(false);
+        btnAnterior.setVisible(false);
+        btnProximo.setVisible(false);
+        btnUltimo.setVisible(false);
+    }
+    
+    public void PreencherCampos() throws SQLException{
         conecta.conexao();
         try {
+            txtIdUsuario.setText(res_tudo.getString("idusuario"));
             txtAtivo.setSelectedItem(res_tudo.getString("ativo"));
             txtNome.setText(res_tudo.getString("nome"));
             txtEndereco.setText(res_tudo.getString("endereco_completo"));
@@ -109,7 +151,15 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
                  
         } catch (SQLException ex) {
             Logger.getLogger(TelaUsuarioInterna.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "Não foi possível efetuar o acesso ao banco de dados.\nErro: " + ex);
+            if (res_tudo.isBeforeFirst()==true){
+                JOptionPane.showMessageDialog(null, "Você já está no primeiro registro. Impossível voltar mais.");
+                res_tudo.first();
+            }else if (res_tudo.isAfterLast()==true){
+                JOptionPane.showMessageDialog(null, "Você já está no último registro. Impossível avançar mais.");
+                res_tudo.last();
+            }else{
+                JOptionPane.showMessageDialog(null, "Não foi possível efetuar o acesso ao banco de dados.\nErro: " + ex);
+            }
         } catch (Exception ex){
             JOptionPane.showMessageDialog(null, "Problema de sistema: "+ex);
         }
@@ -147,6 +197,8 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
         txtNome = new javax.swing.JTextField();
         lblEndereco = new javax.swing.JLabel();
         txtEndereco = new javax.swing.JTextField();
+        txtIdUsuario = new javax.swing.JTextField();
+        lblLogin1 = new javax.swing.JLabel();
         pnlContatos = new javax.swing.JPanel();
         lblTelefone = new javax.swing.JLabel();
         txtTelefone = new javax.swing.JFormattedTextField();
@@ -159,6 +211,7 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
         btnAnterior = new javax.swing.JButton();
         btnProximo = new javax.swing.JButton();
         btnUltimo = new javax.swing.JButton();
+        btnAlterar = new javax.swing.JButton();
 
         setTitle("Cadastro de Usuários");
 
@@ -229,7 +282,7 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
                                     .addComponent(lblSenha))))
                         .addGap(200, 200, 200))
                     .addGroup(pnlProfissionaisLayout.createSequentialGroup()
-                        .addComponent(pnObs, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(pnObs, javax.swing.GroupLayout.DEFAULT_SIZE, 917, Short.MAX_VALUE)
                         .addContainerGap())))
         );
         pnlProfissionaisLayout.setVerticalGroup(
@@ -257,7 +310,6 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
         btnSalvar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/accept.png"))); // NOI18N
         btnSalvar.setText("SALVAR");
-        btnSalvar.setEnabled(false);
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalvarActionPerformed(evt);
@@ -302,6 +354,11 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
 
         txtEndereco.setEnabled(false);
 
+        txtIdUsuario.setEnabled(false);
+
+        lblLogin1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblLogin1.setText("Id");
+
         javax.swing.GroupLayout pnlPessoaisLayout = new javax.swing.GroupLayout(pnlPessoais);
         pnlPessoais.setLayout(pnlPessoaisLayout);
         pnlPessoaisLayout.setHorizontalGroup(
@@ -309,33 +366,41 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
             .addGroup(pnlPessoaisLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtEndereco, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtNome, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlPessoaisLayout.createSequentialGroup()
-                        .addComponent(lblNome)
+                        .addComponent(lblEndereco)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(pnlPessoaisLayout.createSequentialGroup()
                         .addGroup(pnlPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtEndereco, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtNome, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(pnlPessoaisLayout.createSequentialGroup()
-                                .addComponent(lblEndereco)
+                                .addComponent(lblNome)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(pnlPessoaisLayout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPessoaisLayout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(lblAtivo)
+                                .addComponent(lblLogin1)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtAtivo, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap())))
+                                .addComponent(txtIdUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(lblAtivo)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtAtivo, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         pnlPessoaisLayout.setVerticalGroup(
             pnlPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPessoaisLayout.createSequentialGroup()
                 .addGap(4, 4, 4)
-                .addGroup(pnlPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblAtivo)
-                    .addComponent(txtAtivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnlPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtIdUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblLogin1))
+                    .addGroup(pnlPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblAtivo)
+                        .addComponent(txtAtivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(11, 11, 11)
                 .addComponent(lblNome)
-                .addGap(11, 11, 11)
+                .addGap(12, 12, 12)
                 .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblEndereco)
@@ -412,7 +477,6 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cancel.png"))); // NOI18N
         btnCancelar.setText("CANCELAR");
         btnCancelar.setToolTipText("Cancelar");
-        btnCancelar.setEnabled(false);
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -422,7 +486,6 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
         btnPrimeiro.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnPrimeiro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/resultset_first.png"))); // NOI18N
         btnPrimeiro.setToolTipText("Primeiro");
-        btnPrimeiro.setEnabled(false);
         btnPrimeiro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPrimeiroActionPerformed(evt);
@@ -432,7 +495,6 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
         btnAnterior.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnAnterior.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/resultset_previous.png"))); // NOI18N
         btnAnterior.setToolTipText("Anterior");
-        btnAnterior.setEnabled(false);
         btnAnterior.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAnteriorActionPerformed(evt);
@@ -442,7 +504,6 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
         btnProximo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnProximo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/resultset_next.png"))); // NOI18N
         btnProximo.setToolTipText("Próximo");
-        btnProximo.setEnabled(false);
         btnProximo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnProximoActionPerformed(evt);
@@ -452,10 +513,18 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
         btnUltimo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnUltimo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/resultset_last.png"))); // NOI18N
         btnUltimo.setToolTipText("Último");
-        btnUltimo.setEnabled(false);
         btnUltimo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUltimoActionPerformed(evt);
+            }
+        });
+
+        btnAlterar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/accept.png"))); // NOI18N
+        btnAlterar.setText("ALTERAR");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
             }
         });
 
@@ -473,6 +542,8 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
                         .addComponent(btnConsultar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSalvar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAlterar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCancelar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -508,19 +579,18 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
                     .addComponent(btnPrimeiro)
                     .addComponent(btnAnterior)
                     .addComponent(btnProximo)
-                    .addComponent(btnUltimo))
-                .addContainerGap(15, Short.MAX_VALUE))
+                    .addComponent(btnUltimo)
+                    .addComponent(btnAlterar))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
+        HabilitarBotoesInserir();
         HabilitarCampos();
         
-        btnSalvar.setEnabled(true);
-        btnIncluir.setEnabled(false);
-        btnConsultar.setEnabled(false);
         btnCancelar.setEnabled(true);
     }//GEN-LAST:event_btnIncluirActionPerformed
 
@@ -544,17 +614,13 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
                 pst.setString(11,txtObs.getText());
                 pst.executeUpdate();
                 JOptionPane.showMessageDialog(rootPane, "Salvo com Sucesso!");
+                AtualizarRecordSet();
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(rootPane, "Erro no salvamento\n ERRO!: "+ex);
             }
             LimparCampos();
             DesabilitarCampos();
-
-            btnSalvar.setEnabled(false);
-            btnIncluir.setEnabled(true);
-            btnConsultar.setEnabled(true);
-            btnCancelar.setEnabled(false);
-            conecta.desconecta();
+            HabilitarBotoesPadrao();
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -564,8 +630,8 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
         try {
-            HabilitarCampos();
             HabilitaBotoesConsulta();
+            HabilitarCampos();
             res_tudo.first();
             PreencherCampos();
         } catch (SQLException ex) {
@@ -579,15 +645,7 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         LimparCampos();
         DesabilitarCampos();
-        
-        btnSalvar.setEnabled(false);
-        btnIncluir.setEnabled(true);
-        btnConsultar.setEnabled(true);
-        btnCancelar.setEnabled(false);
-        btnPrimeiro.setEnabled(false);
-        btnAnterior.setEnabled(false);
-        btnProximo.setEnabled(false);
-        btnUltimo.setEnabled(false);
+        HabilitarBotoesPadrao();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnPrimeiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrimeiroActionPerformed
@@ -646,8 +704,40 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnUltimoActionPerformed
 
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        if((txtAtivo.getSelectedItem()==null) || (txtLogin.getText()==null || txtLogin.getText().trim().equals("")) || (ptxtSenha.getText()==null || ptxtSenha.getText().trim().equals("")) || (txtLogin.getText()==null || txtLogin.getText().trim().equals("")) || (txtCargo.getSelectedItem()==null) || (txtNome.getText()==null || txtNome.getText().trim().equals("")) || (txtSalario.getText()==null || txtSalario.getText().trim().equals(""))){
+            JOptionPane.showMessageDialog(null, "Existe campo obrigatório ainda não preenchido. Verifique e tente novamente.");
+        }else{
+            try {
+                conecta.conexao();
+                PreparedStatement pst = conecta.conn.prepareStatement("UPDATE usuario SET ativo=?, nome=?, endereco_completo=?, telefone=?, celular=?, email=?, cargo=?, salario=?, login=?, senha=?, obs=? WHERE idusuario=?");
+                pst.setString(1, (String) txtAtivo.getSelectedItem());
+                pst.setString(2,txtNome.getText());
+                pst.setString(3,txtEndereco.getText());
+                pst.setString(4,txtTelefone.getText());
+                pst.setString(5,txtCelular.getText());
+                pst.setString(6,txtEmail.getText());
+                pst.setString(7, (String) txtCargo.getSelectedItem());
+                pst.setDouble(8,Double.valueOf(txtSalario.getText()));
+                pst.setString(9,txtLogin.getText());
+                pst.setString(10,ptxtSenha.getText());
+                pst.setString(11,txtObs.getText());
+                pst.setInt(12, Integer.valueOf(txtIdUsuario.getText()));
+                pst.executeUpdate();
+                JOptionPane.showMessageDialog(rootPane, "Salvo com Sucesso!");
+                AtualizarRecordSet();
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(rootPane, "Erro no salvamento\n ERRO!: "+ex);
+            }
+            LimparCampos();
+            DesabilitarCampos();
+            HabilitarBotoesPadrao();
+        }
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnAnterior;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnConsultar;
@@ -663,6 +753,7 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblEndereco;
     private javax.swing.JLabel lblLogin;
+    private javax.swing.JLabel lblLogin1;
     private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblObs;
     private javax.swing.JLabel lblSalario;
@@ -678,6 +769,7 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
     private javax.swing.JFormattedTextField txtCelular;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtEndereco;
+    private javax.swing.JTextField txtIdUsuario;
     private javax.swing.JTextField txtLogin;
     private javax.swing.JTextField txtNome;
     private javax.swing.JEditorPane txtObs;

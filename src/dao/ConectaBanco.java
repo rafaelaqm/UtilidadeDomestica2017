@@ -20,6 +20,12 @@ public class ConectaBanco {
     private final String senha = "1234";
     public Connection conn;//resposanvel por realizar a conexao com o banco de dados
     
+    //Usando o bd remoto
+    private final String caminhourl = "http://34.226.248.240/phpmyadmin";//responsavel por setar o local do banco de dados
+    private final String usuariourl = "equipe4";
+    private final String senhaurl = "PjlKgv2mnqZPnmBs";
+    
+    
     public void conexao(){//metodo responsavel por realizar a conexao com o banco
         try {//tentativa inicial
             System.setProperty("jdbc.Drivers", driver);//seta a propriedade do driver de conexão
