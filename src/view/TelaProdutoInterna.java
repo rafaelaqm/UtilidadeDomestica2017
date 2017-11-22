@@ -7,6 +7,8 @@ package view;
 
 import dao.ConectaBanco;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
@@ -15,17 +17,34 @@ import javax.swing.*;
  */
 public class TelaProdutoInterna extends javax.swing.JInternalFrame {
     ConectaBanco conecta = new ConectaBanco();
-    /**
-     * Creates new form TelaProdutoInterna
-     */
+    public ResultSet res_tudo;
+    
+    public void AtualizarRecordSet(){
+        try {
+            String sql = "SELECT * FROM produto ORDER BY idproduto";
+            PreparedStatement stm;
+            stm = conecta.conn.prepareStatement(sql);
+            res_tudo = stm.executeQuery(sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaProdutoInterna.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Não foi possível efetuar o acesso ao banco de dados.\nErro: " + ex);
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Problema de sistema: "+ex);
+        }
+    }
+    
     public TelaProdutoInterna() {
         initComponents();
+        conecta.conexao();
+        HabilitarBotoesPadrao();
+        AtualizarRecordSet();
     }
 
     public void LimparCampos(){
+        txtCodigo.setText("");
         txtAtivo.setSelectedItem("");
-        txtDescritivo.setText("");
         txtUnidade.setSelectedItem("");
+        txtDescritivo.setText("");
         txtVr_Aquisicao.setText("");
         txtVr_Venda.setText("");
         txtQtd_Minima.setText("");
@@ -34,22 +53,86 @@ public class TelaProdutoInterna extends javax.swing.JInternalFrame {
     
     public void HabilitarCampos(){
         txtAtivo.setEnabled(true);
-        txtDescritivo.setEnabled(true);
         txtUnidade.setEnabled(true);
+        txtDescritivo.setEnabled(true);
+        txtQtd_Minima.setEnabled(true);
         txtVr_Aquisicao.setEnabled(true);
         txtVr_Venda.setEnabled(true);
-        txtQtd_Minima.setEnabled(true);
-        txtSaldo.setEnabled(true);
+        txtVr_Venda.setEnabled(true);
+        txtVr_Aquisicao.setEnabled(true);
     }
     
     public void DesabilitarCampos(){
         txtAtivo.setEnabled(false);
-        txtDescritivo.setEnabled(false);
         txtUnidade.setEnabled(false);
+        txtDescritivo.setEnabled(false);
         txtVr_Aquisicao.setEnabled(false);
         txtVr_Venda.setEnabled(false);
         txtQtd_Minima.setEnabled(false);
-        txtSaldo.setEnabled(false);
+    }
+    
+    public void HabilitaBotoesConsulta(){
+        btnIncluir.setVisible(false);
+        btnConsultar.setVisible(false);
+        btnSalvar.setVisible(false);
+        btnAlterar.setVisible(true);
+        btnCancelar.setVisible(true);
+        btnPrimeiro.setVisible(true);
+        btnAnterior.setVisible(true);
+        btnProximo.setVisible(true);
+        btnUltimo.setVisible(true);
+    }
+    
+    public void HabilitarBotoesInserir(){
+        btnIncluir.setVisible(false);
+        btnConsultar.setVisible(false);
+        btnSalvar.setVisible(true);
+        btnAlterar.setVisible(false);
+        btnCancelar.setVisible(true);
+        btnPrimeiro.setVisible(false);
+        btnAnterior.setVisible(false);
+        btnProximo.setVisible(false);
+        btnUltimo.setVisible(false);
+    }
+    
+    public void HabilitarBotoesPadrao(){
+        btnIncluir.setVisible(true);
+        btnConsultar.setVisible(true);
+        btnSalvar.setVisible(false);
+        btnAlterar.setVisible(false);
+        btnCancelar.setVisible(false);
+        btnPrimeiro.setVisible(false);
+        btnAnterior.setVisible(false);
+        btnProximo.setVisible(false);
+        btnUltimo.setVisible(false);
+    }
+    
+    public void PreencherCampos() throws SQLException{
+        conecta.conexao();
+        try {
+            txtCodigo.setText(res_tudo.getString("idproduto"));
+            txtAtivo.setSelectedItem(res_tudo.getString("ativo"));
+            txtUnidade.setSelectedItem(res_tudo.getString("unid_medida"));
+            txtDescritivo.setText(res_tudo.getString("descritivo"));
+            txtVr_Aquisicao.setText(res_tudo.getString("vr_aquisicao"));
+            txtVr_Venda.setText(res_tudo.getString("vr_venda"));
+            txtQtd_Minima.setText(res_tudo.getString("qtd_minima"));
+            txtSaldo.setText(res_tudo.getString("saldo"));
+                 
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaProdutoInterna.class.getName()).log(Level.SEVERE, null, ex);
+            if (res_tudo.isBeforeFirst()==true){
+                JOptionPane.showMessageDialog(null, "Você já está no primeiro registro. Impossível voltar mais.");
+                res_tudo.first();
+            }else if (res_tudo.isAfterLast()==true){
+                JOptionPane.showMessageDialog(null, "Você já está no último registro. Impossível avançar mais.");
+                res_tudo.last();
+            }else{
+                JOptionPane.showMessageDialog(null, "Não foi possível efetuar o acesso ao banco de dados.\nErro: " + ex);
+            }
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Problema de sistema: "+ex);
+        }
     }
     
     /**
@@ -80,14 +163,15 @@ public class TelaProdutoInterna extends javax.swing.JInternalFrame {
         txtVr_Aquisicao = new javax.swing.JTextField();
         txtQtd_Minima = new javax.swing.JTextField();
         btnFechar = new javax.swing.JButton();
+        btnAlterar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        btnIncluir = new javax.swing.JButton();
         btnPrimeiro = new javax.swing.JButton();
         btnAnterior = new javax.swing.JButton();
-        btnProximo = new javax.swing.JButton();
-        btnUltimo = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
+        btnProximo = new javax.swing.JButton();
         btnConsultar = new javax.swing.JButton();
-        btnIncluir = new javax.swing.JButton();
+        btnUltimo = new javax.swing.JButton();
 
         setTitle("Cadastro de Produtos");
         setPreferredSize(new java.awt.Dimension(874, 530));
@@ -166,7 +250,7 @@ public class TelaProdutoInterna extends javax.swing.JInternalFrame {
         pnlVenda.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dados do Estoque", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
         lblPreco.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblPreco.setText("Valor de Venda (*)");
+        lblPreco.setText("Valor de Venda");
 
         txtVr_Venda.setEnabled(false);
 
@@ -174,12 +258,12 @@ public class TelaProdutoInterna extends javax.swing.JInternalFrame {
         lblQuantidade.setText("Quantidade Minima (*)");
 
         lblSaldo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblSaldo.setText("Saldo Atual (*)");
+        lblSaldo.setText("Saldo Atual");
 
         txtSaldo.setEnabled(false);
 
         lblValor.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblValor.setText("Valor de Aquisição (*)");
+        lblValor.setText("Valor de Aquisição");
 
         txtVr_Aquisicao.setEnabled(false);
 
@@ -242,21 +326,38 @@ public class TelaProdutoInterna extends javax.swing.JInternalFrame {
             }
         });
 
+        btnAlterar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/accept.png"))); // NOI18N
+        btnAlterar.setText("ALTERAR");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
+
         btnCancelar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cancel.png"))); // NOI18N
         btnCancelar.setText("CANCELAR");
         btnCancelar.setToolTipText("Cancelar");
-        btnCancelar.setEnabled(false);
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
             }
         });
 
+        btnIncluir.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnIncluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add.png"))); // NOI18N
+        btnIncluir.setText("INCLUIR");
+        btnIncluir.setToolTipText("Incluir");
+        btnIncluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIncluirActionPerformed(evt);
+            }
+        });
+
         btnPrimeiro.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnPrimeiro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/resultset_first.png"))); // NOI18N
         btnPrimeiro.setToolTipText("Primeiro");
-        btnPrimeiro.setEnabled(false);
         btnPrimeiro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPrimeiroActionPerformed(evt);
@@ -266,40 +367,27 @@ public class TelaProdutoInterna extends javax.swing.JInternalFrame {
         btnAnterior.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnAnterior.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/resultset_previous.png"))); // NOI18N
         btnAnterior.setToolTipText("Anterior");
-        btnAnterior.setEnabled(false);
         btnAnterior.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAnteriorActionPerformed(evt);
             }
         });
 
-        btnProximo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnProximo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/resultset_next.png"))); // NOI18N
-        btnProximo.setToolTipText("Próximo");
-        btnProximo.setEnabled(false);
-        btnProximo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnProximoActionPerformed(evt);
-            }
-        });
-
-        btnUltimo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnUltimo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/resultset_last.png"))); // NOI18N
-        btnUltimo.setToolTipText("Último");
-        btnUltimo.setEnabled(false);
-        btnUltimo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUltimoActionPerformed(evt);
-            }
-        });
-
         btnSalvar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/accept.png"))); // NOI18N
         btnSalvar.setText("SALVAR");
-        btnSalvar.setEnabled(false);
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalvarActionPerformed(evt);
+            }
+        });
+
+        btnProximo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnProximo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/resultset_next.png"))); // NOI18N
+        btnProximo.setToolTipText("Próximo");
+        btnProximo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProximoActionPerformed(evt);
             }
         });
 
@@ -313,13 +401,12 @@ public class TelaProdutoInterna extends javax.swing.JInternalFrame {
             }
         });
 
-        btnIncluir.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnIncluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add.png"))); // NOI18N
-        btnIncluir.setText("INCLUIR");
-        btnIncluir.setToolTipText("Incluir");
-        btnIncluir.addActionListener(new java.awt.event.ActionListener() {
+        btnUltimo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnUltimo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/resultset_last.png"))); // NOI18N
+        btnUltimo.setToolTipText("Último");
+        btnUltimo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnIncluirActionPerformed(evt);
+                btnUltimoActionPerformed(evt);
             }
         });
 
@@ -339,6 +426,8 @@ public class TelaProdutoInterna extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSalvar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAlterar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCancelar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnPrimeiro, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -348,7 +437,7 @@ public class TelaProdutoInterna extends javax.swing.JInternalFrame {
                         .addComponent(btnProximo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnUltimo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnFechar)))
                 .addContainerGap())
         );
@@ -359,21 +448,21 @@ public class TelaProdutoInterna extends javax.swing.JInternalFrame {
                 .addComponent(pnlProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(pnlVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 258, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 237, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnFechar)
-                    .addComponent(btnSalvar)
-                    .addComponent(btnIncluir)
-                    .addComponent(btnConsultar)
-                    .addComponent(btnCancelar)
-                    .addComponent(btnPrimeiro)
-                    .addComponent(btnAnterior)
-                    .addComponent(btnProximo)
-                    .addComponent(btnUltimo))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnSalvar)
+                        .addComponent(btnIncluir)
+                        .addComponent(btnConsultar)
+                        .addComponent(btnCancelar)
+                        .addComponent(btnPrimeiro)
+                        .addComponent(btnAnterior)
+                        .addComponent(btnProximo)
+                        .addComponent(btnUltimo)
+                        .addComponent(btnAlterar)))
                 .addContainerGap())
         );
-
-        pnlVenda.getAccessibleContext().setAccessibleName("Dados do Estoque");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -382,92 +471,143 @@ public class TelaProdutoInterna extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_btnFecharActionPerformed
 
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        LimparCampos();
-        DesabilitarCampos();
-
-        btnSalvar.setEnabled(false);
-        btnIncluir.setEnabled(true);
-        btnConsultar.setEnabled(true);
-        btnCancelar.setEnabled(false);
-        btnPrimeiro.setEnabled(false);
-        btnAnterior.setEnabled(false);
-        btnProximo.setEnabled(false);
-        btnUltimo.setEnabled(false);
-    }//GEN-LAST:event_btnCancelarActionPerformed
-
-    private void btnPrimeiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrimeiroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnPrimeiroActionPerformed
-
-    private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAnteriorActionPerformed
-
-    private void btnProximoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProximoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnProximoActionPerformed
-
-    private void btnUltimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUltimoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnUltimoActionPerformed
-
-    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        if(txtUnidade.getSelectedItem()==null || txtAtivo.getSelectedItem()==null || (txtDescritivo.getText()==null || txtDescritivo.getText().trim().equals("")) || (txtVr_Aquisicao.getText()==null || txtVr_Aquisicao.getText().trim().equals("")) || (txtVr_Venda.getText()==null || txtVr_Venda.getText().trim().equals("")) || (txtQtd_Minima.getText()==null || txtQtd_Minima.getText().trim().equals("")) || (txtSaldo.getText()==null || txtSaldo.getText().trim().equals(""))){
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        if((txtAtivo.getSelectedItem()==null) || (txtUnidade.getSelectedItem()==null) || (txtDescritivo.getText()==null || txtDescritivo.getText().trim().equals("")) || (txtQtd_Minima.getText()==null || txtQtd_Minima.getText().trim().equals(""))){
             JOptionPane.showMessageDialog(null, "Existe campo obrigatório ainda não preenchido. Verifique e tente novamente.");
         }else{
             try {
                 conecta.conexao();
-                PreparedStatement pst = conecta.conn.prepareStatement("insert into produto (unid_medida, ativo, descricao, vr_aquisicao, vr_venda, qtd_minima,saldo)values(?,?,?,?,?,?,?)");
-                pst.setString(1, (String) txtUnidade.getSelectedItem());
-                pst.setString(2, (String) txtAtivo.getSelectedItem());
+                PreparedStatement pst = conecta.conn.prepareStatement("UPDATE produto SET unid_medida=?,ativo=?,descritivo=?,vr_aquisicao=?,vr_venda=?,qtd_minima=? WHERE idproduto=?");
+                pst.setString(1,(String) txtUnidade.getSelectedItem());
+                pst.setString(2,(String) txtAtivo.getSelectedItem());
                 pst.setString(3,txtDescritivo.getText());
                 pst.setString(4,txtVr_Aquisicao.getText());
                 pst.setString(5,txtVr_Venda.getText());
                 pst.setString(6,txtQtd_Minima.getText());
-                pst.setString(7, txtSaldo.getText());
+                pst.setDouble(7,Integer.valueOf(txtCodigo.getText()));
                 pst.executeUpdate();
                 JOptionPane.showMessageDialog(rootPane, "Salvo com Sucesso!");
+                AtualizarRecordSet();
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(rootPane, "Erro no salvamento\n ERRO!: "+ex);
             }
             LimparCampos();
             DesabilitarCampos();
-
-            btnSalvar.setEnabled(false);
-            btnIncluir.setEnabled(true);
-            btnConsultar.setEnabled(true);
-            btnCancelar.setEnabled(false);
-            conecta.desconecta();
+            HabilitarBotoesPadrao();
         }
-    }//GEN-LAST:event_btnSalvarActionPerformed
+    }//GEN-LAST:event_btnAlterarActionPerformed
 
-    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        HabilitarCampos();
-        btnSalvar.setEnabled(false);
-        btnIncluir.setEnabled(false);
-        btnConsultar.setEnabled(false);
-        btnCancelar.setEnabled(true);
-        btnPrimeiro.setEnabled(true);
-        btnAnterior.setEnabled(true);
-        btnProximo.setEnabled(true);
-        btnUltimo.setEnabled(true);
-
-        JOptionPane.showMessageDialog(null, "Este botão ainda não está totalmente funcional.\nO botão Cancelar será ativado automaticamente.");
-        btnCancelar.doClick();
-    }//GEN-LAST:event_btnConsultarActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        LimparCampos();
+        DesabilitarCampos();
+        HabilitarBotoesPadrao();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
+        HabilitarBotoesInserir();
         HabilitarCampos();
-
-        btnSalvar.setEnabled(true);
-        btnIncluir.setEnabled(false);
-        btnConsultar.setEnabled(false);
+        
         btnCancelar.setEnabled(true);
     }//GEN-LAST:event_btnIncluirActionPerformed
 
+    private void btnPrimeiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrimeiroActionPerformed
+        try {
+            HabilitarCampos();
+            HabilitaBotoesConsulta();
+            res_tudo.first();
+            PreencherCampos();
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaProdutoInterna.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Não foi possível efetuar o acesso ao banco de dados.\nErro: " + ex);
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Problema de sistema: "+ex);
+        }
+    }//GEN-LAST:event_btnPrimeiroActionPerformed
+
+    private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
+        try {
+            HabilitarCampos();
+            HabilitaBotoesConsulta();
+            res_tudo.previous();
+            PreencherCampos();
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaProdutoInterna.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Não foi possível efetuar o acesso ao banco de dados.\nErro: " + ex);
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Problema de sistema: "+ex);
+        }
+    }//GEN-LAST:event_btnAnteriorActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        if((txtAtivo.getSelectedItem()==null) || (txtUnidade.getSelectedItem()==null) || (txtDescritivo.getText()==null || txtDescritivo.getText().trim().equals("")) || (txtQtd_Minima.getText()==null || txtQtd_Minima.getText().trim().equals(""))){
+            JOptionPane.showMessageDialog(null, "Existe campo obrigatório ainda não preenchido. Verifique e tente novamente.");
+        }else{
+            try {
+                conecta.conexao();
+                PreparedStatement pst = conecta.conn.prepareStatement("insert into produto (unid_medida,ativo,descritivo,vr_aquisicao,vr_venda,qtd_minima) values (?,?,?,?,?,?)");
+                pst.setString(1,(String) txtUnidade.getSelectedItem());
+                pst.setString(2,(String) txtAtivo.getSelectedItem());
+                pst.setString(3,txtDescritivo.getText());
+                pst.setString(4,txtVr_Aquisicao.getText());
+                pst.setString(5,txtVr_Venda.getText());
+                pst.setString(6,txtQtd_Minima.getText());
+                pst.executeUpdate();
+                JOptionPane.showMessageDialog(rootPane, "Salvo com Sucesso!");
+                AtualizarRecordSet();
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(rootPane, "Erro no salvamento\n ERRO!: "+ex);
+            }
+            LimparCampos();
+            DesabilitarCampos();
+            HabilitarBotoesPadrao();
+        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnProximoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProximoActionPerformed
+        try {
+            HabilitarCampos();
+            HabilitaBotoesConsulta();
+            res_tudo.next();
+            PreencherCampos();
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaProdutoInterna.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Não foi possível efetuar o acesso ao banco de dados.\nErro: " + ex);
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Problema de sistema: "+ex);
+        }
+    }//GEN-LAST:event_btnProximoActionPerformed
+
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        try {
+            HabilitaBotoesConsulta();
+            HabilitarCampos();
+            res_tudo.first();
+            PreencherCampos();
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaProdutoInterna.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Não foi possível efetuar o acesso ao banco de dados.\nErro: " + ex);
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Problema de sistema: "+ex);
+        }
+    }//GEN-LAST:event_btnConsultarActionPerformed
+
+    private void btnUltimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUltimoActionPerformed
+        try {
+            HabilitarCampos();
+            HabilitaBotoesConsulta();
+            res_tudo.last();
+            PreencherCampos();
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaProdutoInterna.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Não foi possível efetuar o acesso ao banco de dados.\nErro: " + ex);
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Problema de sistema: "+ex);
+        }
+    }//GEN-LAST:event_btnUltimoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnAnterior;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnConsultar;

@@ -40,18 +40,7 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
         conecta.conexao();
         HabilitarBotoesPadrao();
         AtualizarRecordSet();
-        
-        /*try {
-            String sql = "SELECT * FROM usuario ORDER BY nome";
-            PreparedStatement stm;
-            stm = conecta.conn.prepareStatement(sql);
-            res_tudo = stm.executeQuery(sql);
-        } catch (SQLException ex) {
-            Logger.getLogger(TelaUsuarioInterna.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "Não foi possível efetuar o acesso ao banco de dados.\nErro: " + ex);
-        } catch (Exception ex){
-            JOptionPane.showMessageDialog(null, "Problema de sistema: "+ex);
-        }*/
+
 
     }
     
