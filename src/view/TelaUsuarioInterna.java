@@ -150,7 +150,7 @@ public class TelaUsuarioInterna extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null, "Não foi possível efetuar o acesso ao banco de dados.\nErro: " + ex);
             }
         } catch (Exception ex){
-            JOptionPane.showMessageDialog(null, "Problema de sistema: "+ex);
+            //JOptionPane.showMessageDialog(null, "Problema de sistema: "+ex);
         }
     }
 

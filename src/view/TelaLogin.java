@@ -9,11 +9,19 @@ import javax.swing.JOptionPane;
 
 
 public class TelaLogin extends javax.swing.JFrame {
-    
     ConectaBanco con = new ConectaBanco();//instancia da classe de conexão
+    public Integer usuario_principal;
     
     public TelaLogin() {
         initComponents();
+    }
+
+    public Integer getUsuario_principal() {
+        return usuario_principal;
+    }
+
+    public void setUsuario_principal(Integer usuario_principal) {
+        this.usuario_principal = usuario_principal;
     }
 
 
@@ -136,8 +144,10 @@ public class TelaLogin extends javax.swing.JFrame {
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
         con.conexao();
         try {
-            con.executaSQL("SELECT login,senha,ativo FROM usuario WHERE login='"+ this.txtUsuario.getText() + "' && ativo='Sim'");
+            con.executaSQL("SELECT idusuario,login,senha,ativo FROM usuario WHERE login='"+ this.txtUsuario.getText() + "' && ativo='Sim'");
             con.res.first();
+            usuario_principal = Integer.valueOf(con.res.getString("idusuario"));
+            JOptionPane.showMessageDialog(null, "O usuário ativo é: "+usuario_principal);
             if(con.res.getString("senha").equals(this.ptxtSenha.getText())){
                 con.desconecta();
                 TelaPrincipal pri = new TelaPrincipal();
