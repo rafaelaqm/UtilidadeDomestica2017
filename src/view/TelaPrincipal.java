@@ -19,12 +19,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         PainelPrincipal = new javax.swing.JDesktopPane();
         txtPrincipal = new javax.swing.JMenuBar();
-        txtArquivo = new javax.swing.JMenu();
-        mnuVenda = new javax.swing.JMenuItem();
-        mnuEntrarEstoque = new javax.swing.JMenuItem();
         txtCadastro = new javax.swing.JMenu();
         mnuUsuario = new javax.swing.JMenuItem();
         mnuProduto = new javax.swing.JMenuItem();
+        txtArquivo = new javax.swing.JMenu();
+        mnuVenda = new javax.swing.JMenuItem();
+        mnuEntrarEstoque = new javax.swing.JMenuItem();
         mnuSair = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -42,28 +42,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         );
 
         txtPrincipal.setToolTipText("");
-
-        txtArquivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/page.png"))); // NOI18N
-        txtArquivo.setText("Arquivo");
-
-        mnuVenda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/sales.png"))); // NOI18N
-        mnuVenda.setText("Venda");
-        mnuVenda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuVendaActionPerformed(evt);
-            }
-        });
-        txtArquivo.add(mnuVenda);
-
-        mnuEntrarEstoque.setText("Entrar Estoque");
-        mnuEntrarEstoque.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuEntrarEstoqueActionPerformed(evt);
-            }
-        });
-        txtArquivo.add(mnuEntrarEstoque);
-
-        txtPrincipal.add(txtArquivo);
 
         txtCadastro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/group_add.png"))); // NOI18N
         txtCadastro.setText("Cadastro");
@@ -87,6 +65,29 @@ public class TelaPrincipal extends javax.swing.JFrame {
         txtCadastro.add(mnuProduto);
 
         txtPrincipal.add(txtCadastro);
+
+        txtArquivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/page.png"))); // NOI18N
+        txtArquivo.setText("Lançamentos");
+
+        mnuVenda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/sales.png"))); // NOI18N
+        mnuVenda.setText("Venda");
+        mnuVenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuVendaActionPerformed(evt);
+            }
+        });
+        txtArquivo.add(mnuVenda);
+
+        mnuEntrarEstoque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/arrow_down.png"))); // NOI18N
+        mnuEntrarEstoque.setText("Entrar Estoque");
+        mnuEntrarEstoque.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuEntrarEstoqueActionPerformed(evt);
+            }
+        });
+        txtArquivo.add(mnuEntrarEstoque);
+
+        txtPrincipal.add(txtArquivo);
 
         mnuSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/house_go.png"))); // NOI18N
         mnuSair.setText("Sair");
@@ -129,7 +130,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuUsuarioActionPerformed
 
     private void mnuVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuVendaActionPerformed
-            JOptionPane.showMessageDialog(null, "Janela ainda não implementada");
+        try {
+            TelaVenda frm = new TelaVenda();
+            PainelPrincipal.add(frm);
+            frm.setVisible(true);
+            frm.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_mnuVendaActionPerformed
 
     private void mnuProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuProdutoActionPerformed

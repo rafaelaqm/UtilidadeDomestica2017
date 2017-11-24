@@ -17,7 +17,7 @@ import java.sql.*;
  *
  * @author Wesley
  */
-public class TelaEntrarEstoque extends javax.swing.JInternalFrame {
+public class TelaVenda extends javax.swing.JInternalFrame {
     ConectaBanco conecta = new ConectaBanco();
     TelaLogin login = new TelaLogin();
     public ResultSet res_tudo;
@@ -29,14 +29,14 @@ public class TelaEntrarEstoque extends javax.swing.JInternalFrame {
             stm = conecta.conn.prepareStatement(sql);
             res_tudo = stm.executeQuery(sql);
         } catch (SQLException ex) {
-            Logger.getLogger(TelaEntrarEstoque.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TelaVenda.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Não foi possível efetuar o acesso ao banco de dados.\nErro: " + ex);
         } catch (Exception ex){
             JOptionPane.showMessageDialog(null, "Problema de sistema: "+ex);
         }
     }
     
-    public TelaEntrarEstoque() {
+    public TelaVenda() {
         initComponents();
         conecta.conexao();
         HabilitarBotoesPadrao();
@@ -105,7 +105,7 @@ public class TelaEntrarEstoque extends javax.swing.JInternalFrame {
             txtQtd.setText(res_tudo.getString("qtd"));
             txtData.setText(res_tudo.getString("data"));                 
         } catch (SQLException ex) {
-            Logger.getLogger(TelaEntrarEstoque.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TelaVenda.class.getName()).log(Level.SEVERE, null, ex);
             if (res_tudo.isBeforeFirst()==true){
                 JOptionPane.showMessageDialog(null, "Você já está no primeiro registro. Impossível voltar mais.");
                 res_tudo.first();
@@ -148,7 +148,7 @@ public class TelaEntrarEstoque extends javax.swing.JInternalFrame {
         btnProximo = new javax.swing.JButton();
         btnUltimo = new javax.swing.JButton();
 
-        setTitle("Entrada de Produtos");
+        setTitle("Venda de Produtos");
 
         btnIncluir.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnIncluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add.png"))); // NOI18N
@@ -189,7 +189,7 @@ public class TelaEntrarEstoque extends javax.swing.JInternalFrame {
             }
         });
 
-        pnlPessoais.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Entrar no Estoque", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+        pnlPessoais.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Retirar do estoque", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
         lblNome.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblNome.setText("ID Produto");
@@ -249,15 +249,14 @@ public class TelaEntrarEstoque extends javax.swing.JInternalFrame {
                     .addComponent(lblTelefone)
                     .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(13, 13, 13)
-                .addGroup(pnlPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlPessoaisLayout.createSequentialGroup()
-                        .addComponent(lblNome)
+                        .addGroup(pnlPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblNome)
+                            .addComponent(lblEndereco))
                         .addGap(12, 12, 12)
                         .addComponent(txtProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlPessoaisLayout.createSequentialGroup()
-                        .addComponent(lblEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtQtd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(txtQtd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         btnCancelar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -373,7 +372,7 @@ public class TelaEntrarEstoque extends javax.swing.JInternalFrame {
                 pst.setInt(1,Integer.valueOf(txtProd.getText()));
                 pst.setFloat(2,Float.valueOf(txtQtd.getText()));
                 pst.setString(3,txtData.getText());
-                pst.setString(4, "S");
+                pst.setString(4, "E");
                 pst.executeUpdate();
                 JOptionPane.showMessageDialog(rootPane, "Salvo com Sucesso!");
                 AtualizarRecordSet();
@@ -397,7 +396,7 @@ public class TelaEntrarEstoque extends javax.swing.JInternalFrame {
             res_tudo.first();
             PreencherCampos();
         } catch (SQLException ex) {
-            Logger.getLogger(TelaEntrarEstoque.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TelaVenda.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Não foi possível efetuar o acesso ao banco de dados.\nErro: " + ex);
         } catch (Exception ex){
             JOptionPane.showMessageDialog(null, "Problema de sistema: "+ex);
@@ -417,7 +416,7 @@ public class TelaEntrarEstoque extends javax.swing.JInternalFrame {
             res_tudo.first();
             PreencherCampos();
         } catch (SQLException ex) {
-            Logger.getLogger(TelaEntrarEstoque.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TelaVenda.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Não foi possível efetuar o acesso ao banco de dados.\nErro: " + ex);
         } catch (Exception ex){
             JOptionPane.showMessageDialog(null, "Problema de sistema: "+ex);
@@ -431,7 +430,7 @@ public class TelaEntrarEstoque extends javax.swing.JInternalFrame {
             res_tudo.previous();
             PreencherCampos();
         } catch (SQLException ex) {
-            Logger.getLogger(TelaEntrarEstoque.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TelaVenda.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Não foi possível efetuar o acesso ao banco de dados.\nErro: " + ex);
         } catch (Exception ex){
             JOptionPane.showMessageDialog(null, "Problema de sistema: "+ex);
@@ -445,7 +444,7 @@ public class TelaEntrarEstoque extends javax.swing.JInternalFrame {
             res_tudo.next();
             PreencherCampos();
         } catch (SQLException ex) {
-            Logger.getLogger(TelaEntrarEstoque.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TelaVenda.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Não foi possível efetuar o acesso ao banco de dados.\nErro: " + ex);
         } catch (Exception ex){
             JOptionPane.showMessageDialog(null, "Problema de sistema: "+ex);
@@ -459,7 +458,7 @@ public class TelaEntrarEstoque extends javax.swing.JInternalFrame {
             res_tudo.last();
             PreencherCampos();
         } catch (SQLException ex) {
-            Logger.getLogger(TelaEntrarEstoque.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TelaVenda.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Não foi possível efetuar o acesso ao banco de dados.\nErro: " + ex);
         } catch (Exception ex){
             JOptionPane.showMessageDialog(null, "Problema de sistema: "+ex);
