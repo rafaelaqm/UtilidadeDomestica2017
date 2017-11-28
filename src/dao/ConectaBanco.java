@@ -21,9 +21,9 @@ public class ConectaBanco {
     public Connection conn;//resposanvel por realizar a conexao com o banco de dados
     
     //Usando o bd remoto
-    private final String caminhourl = "http://34.226.248.240/phpmyadmin";//responsavel por setar o local do banco de dados
-    private final String usuariourl = "equipe4";
-    private final String senhaurl = "PjlKgv2mnqZPnmBs";
+    private final String caminhourl = "sistemadevenda.cdqjhi9122zv.us-east-2.rds.amazonaws.com:3306";//responsavel por setar o local do banco de dados
+    private final String usuariourl = "sistemadevenda";
+    private final String senhaurl = "12345678";
     
     
     public void conexao(){//metodo responsavel por realizar a conexao com o banco
