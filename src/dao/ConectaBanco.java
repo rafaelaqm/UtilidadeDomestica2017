@@ -25,7 +25,6 @@ public class ConectaBanco {
     private final String usuariourl = "sistemadevenda";
     private final String senhaurl = "12345678";
     
-    
     public void conexao(){//metodo responsavel por realizar a conexao com o banco
         try {//tentativa inicial
             System.setProperty("jdbc.Drivers", driver);//seta a propriedade do driver de conexão
