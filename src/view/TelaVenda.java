@@ -210,7 +210,7 @@ public class TelaVenda extends javax.swing.JInternalFrame {
         lblTelefone.setText("Data");
 
         try {
-            txtData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+            txtData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-##-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -367,12 +367,17 @@ public class TelaVenda extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Existe campo obrigatório ainda não preenchido. Verifique e tente novamente.");
         }else{
             try {
+                int id, qtd=0;
                 conecta.conexao();
-                PreparedStatement pst = conecta.conn.prepareStatement("insert into movimentacao_prod (idproduto,qtd,data,tipo)values(?,?,?,?)");
+                conecta.executaSQL("select * from produto where idproduto'"+txtProd.getText()+"'");
+                conecta.res.first(); 
+                qtd = conecta.res.getInt("qnt");
+                PreparedStatement pst = conecta.conn.prepareStatement("insert into movimentacao_prod (idproduto,qtd,data,tipo,idusuario)values(?,?,?,?,?)");
                 pst.setInt(1,Integer.valueOf(txtProd.getText()));
                 pst.setFloat(2,Float.valueOf(txtQtd.getText()));
                 pst.setString(3,txtData.getText());
                 pst.setString(4, "E");
+                pst.setString(5, "5");
                 pst.executeUpdate();
                 JOptionPane.showMessageDialog(rootPane, "Salvo com Sucesso!");
                 AtualizarRecordSet();

@@ -13,6 +13,8 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import java.sql.*;
 
+
+
 /**
  *
  * @author Wesley
@@ -21,7 +23,8 @@ public class TelaEntrarEstoque extends javax.swing.JInternalFrame {
     ConectaBanco conecta = new ConectaBanco();
     TelaLogin login = new TelaLogin();
     public ResultSet res_tudo;
-
+    
+    
     public void AtualizarRecordSet(){
         try {
             String sql = "SELECT * FROM movimentacao_prod ORDER BY idmovimentacao";
@@ -210,11 +213,17 @@ public class TelaEntrarEstoque extends javax.swing.JInternalFrame {
         lblTelefone.setText("Data");
 
         try {
-            txtData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+            txtData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-##-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        txtData.setText("    -  -  ");
         txtData.setEnabled(false);
+        txtData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDataActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlPessoaisLayout = new javax.swing.GroupLayout(pnlPessoais);
         pnlPessoais.setLayout(pnlPessoaisLayout);
@@ -369,14 +378,17 @@ public class TelaEntrarEstoque extends javax.swing.JInternalFrame {
         }else{
             try {
                 conecta.conexao();
-                PreparedStatement pst = conecta.conn.prepareStatement("insert into movimentacao_prod (idproduto,qtd,data,tipo)values(?,?,?,?)");
+                PreparedStatement pst = conecta.conn.prepareStatement("insert into movimentacao_prod (idproduto,qtd,data,tipo,idusuario)values(?,?,?,?,?)");
                 pst.setInt(1,Integer.valueOf(txtProd.getText()));
                 pst.setFloat(2,Float.valueOf(txtQtd.getText()));
                 pst.setString(3,txtData.getText());
                 pst.setString(4, "S");
+                pst.setString(5, "5");
                 pst.executeUpdate();
                 JOptionPane.showMessageDialog(rootPane, "Salvo com Sucesso!");
                 AtualizarRecordSet();
+                
+                
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(rootPane, "Erro no salvamento\n ERRO!: "+ex);
             }
@@ -386,6 +398,10 @@ public class TelaEntrarEstoque extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
+    
+    
+    
+    
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnFecharActionPerformed
@@ -465,7 +481,40 @@ public class TelaEntrarEstoque extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Problema de sistema: "+ex);
         }
     }//GEN-LAST:event_btnUltimoActionPerformed
+    private void update(java.awt.event.ActionEvent evt) {                                          
+        if((txtData.getText()==null || txtData.getText().trim().equals("")) || (txtProd.getText()==null || txtProd.getText().trim().equals("")) || (txtQtd.getText()==null || txtQtd.getText().trim().equals(""))){
+            JOptionPane.showMessageDialog(null, "Existe campo obrigatório ainda não preenchido. Verifique e tente novamente.");
+        }else{
+            try {
+                conecta.conexao();
+                PreparedStatement pst = conecta.conn.prepareStatement("UPDATE produto SET qtd = ?,data = ?,tipo = ?,idusuario = ? WHERE idproduto = ?");
+                pst.setFloat(1,Float.valueOf(txtQtd.getText()));
+                pst.setString(2,txtData.getText());
+                pst.setString(3, "S");
+                pst.setString(4, "5");
+                pst.setInt(5,Integer.valueOf(txtProd.getText()));
+                pst.executeUpdate();
+                JOptionPane.showMessageDialog(rootPane, "Salvo com Sucesso!");
+                AtualizarRecordSet();
+                
+                
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(rootPane, "Erro no salvamento\n ERRO!: "+ex);
+            }
+            LimparCampos();
+            DesabilitarCampos();
+            HabilitarBotoesPadrao();
+        }
+    }                                         
 
+    
+    
+    
+    private void txtDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataActionPerformed
+    
+    }//GEN-LAST:event_txtDataActionPerformed
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnterior;

@@ -18,12 +18,13 @@ public class ConectaBanco {
     private final String caminho = "jdbc:mysql://localhost:3306/sistemadevenda";//responsavel por setar o local do banco de dados
     private final String usuario = "root";
     private final String senha = "1234";
+   
     public Connection conn;//resposanvel por realizar a conexao com o banco de dados
     
     //Usando o bd remoto
-    private final String caminhourl = "sistemadevenda.cdqjhi9122zv.us-east-2.rds.amazonaws.com:3306";//responsavel por setar o local do banco de dados
+    private final String caminhourl = "sistemadevenda.casmt7yahovv.sa-east-1.rds.amazonaws.com:3306";//responsavel por setar o local do banco de dados
     private final String usuariourl = "sistemadevenda";
-    private final String senhaurl = "12345678";
+    private final String senhaurl = "123456789";
     
     public void conexao(){//metodo responsavel por realizar a conexao com o banco
         try {//tentativa inicial
